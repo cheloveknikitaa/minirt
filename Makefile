@@ -6,42 +6,48 @@
 #    By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/10 22:20:54 by caugusta          #+#    #+#              #
-#    Updated: 2021/05/11 15:35:44 by caugusta         ###   ########.fr        #
+#    Updated: 2021/05/11 20:30:18 by caugusta         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = miniRT
-LIBFT_NAME = libft.a
-MLX_NAME = libmlx.dylib
+NAME				= miniRT
+LIBFT_NAME			= libft.a
+MLX_NAME			= libmlx.dylib
 
-FLAGS = -Wall -Wextra -Werror
-INCLUDE_FLAG = -I $(INCLUDES_PATH) -I $(MLX_PATH)
+CC					= gcc
+CFLAGS				= #-Wall -Wextra -Werror
 
-VPATH = source:includes
-MLX_PATH = mlx
-LIBFT_PATH = libft
-OBJ_PATH = object
+OBJ_DIR				= object/
+SOURCE_DIR			= source/
+SOURCE				= main.c
 
-HEADERS = $(wildcard *.h)
-SRC = $(wildcard *.c)
-OBJ = $(wildcard *.o)
+LIBFT				= libft/$(LIBFT_NAME)
+LIBFT_PATH			= libft/
+MLX					= mlx/$(MLX_NAME)
+MLX_PATH			= mlx/
 
-O_FILE = $(patsubst %.c, $(OBJ_PATH)%.o, $(SRC))
+OBJ					= $(addprefix $(OBJ_DIR), $(SOURCE:.c=.o))
+D_FILES				= $(OBJ_DIR)%.d
 
-all : libcompil obj $(NAME)
+.PHONY : all sub_directory clean fclean re bonus
 
-libcompil :
+all : sub_directory $(NAME)
+
+sub_directory :
+	@mkdir -p $(OBJ_DIR)
+
+$(OBJ_DIR)%.o : $(SOURCE_DIR)%.c
+	$(CC) -c -MMD $(CFLAGS) -I includes $< -o $@
+
+$(NAME) : $(MLX) $(OBJ) $(LIBFT)
+	$(CC) $(CFLAGS) -lmlx -framework OpenGL -framework AppKit $^ -o $@
+
+$(LIBFT) :
 	@$(MAKE) -C $(LIBFT_PATH)
+$(MLX) :
 	@$(MAKE) -C $(MLX_PATH)
 
-obj :
-	@mkdir -p $(OBJ_PATH)
-
-$(O_FILE) : $(SRC)
-	gcc $(FLAGS) -c $< -o $@
-
-$(NAME) : $(OBJ) $(HEADERS)
-	gcc $(FLAGS) $(OBJ) -o $(NAME)
+include $(D_FILES)
 
 bonus : all
 
@@ -56,5 +62,3 @@ fclean : clean
 	@rm -rf $(NAME)
 
 re : fclean all
-
-.PHONY : all obj clean fclean re bonus
