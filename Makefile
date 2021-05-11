@@ -6,48 +6,42 @@
 #    By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/10 22:20:54 by caugusta          #+#    #+#              #
-#    Updated: 2021/05/10 22:51:30 by caugusta         ###   ########.fr        #
+#    Updated: 2021/05/11 15:35:44 by caugusta         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = miniRT
 LIBFT_NAME = libft.a
-MLX_NAME = 
+MLX_NAME = libmlx.dylib
 
-OPTFLAGS = -O2
 FLAGS = -Wall -Wextra -Werror
-INCLUDE_FLAG = -I $(INCLUDES) -I $(LIBFT_PATH) -I $(MLX_PATH)
+INCLUDE_FLAG = -I $(INCLUDES_PATH) -I $(MLX_PATH)
 
-INCLUDES = includes
-LIBFT_PATH = libft
-SRC_PATH = source
-OBJ_PATH = object
+VPATH = source:includes
 MLX_PATH = mlx
+LIBFT_PATH = libft
+OBJ_PATH = object
 
-HEADERS = $(INCLUDES)/*.h
+HEADERS = $(wildcard *.h)
+SRC = $(wildcard *.c)
+OBJ = $(wildcard *.o)
 
-SRC = \
+O_FILE = $(patsubst %.c, $(OBJ_PATH)%.o, $(SRC))
 
-OBJ = $(addprefix $(OBJ_PATH)/, $(SRC:.c=.o)
+all : libcompil obj $(NAME)
 
-all : libft mlx obj $(NAME)
-
-libft :
+libcompil :
 	@$(MAKE) -C $(LIBFT_PATH)
-
-mlx :
 	@$(MAKE) -C $(MLX_PATH)
 
 obj :
 	@mkdir -p $(OBJ_PATH)
 
-$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(HEADERS)
-	gcc $(FLAGS) $(OPTFLAGS) $(INCLUDE_FLAG) -c $< -o $@
+$(O_FILE) : $(SRC)
+	gcc $(FLAGS) -c $< -o $@
 
-$(NAME) : $(OBJ) $(HEADERS) $(LIBFT_PATH)/$(LIBFT_NAME)
-	@cp $(LIBFT_PATH)/$(LIBFT_NAME) $(OBJ_PATH)
-	@cp $(MLX_PATH)/$(MLX_NAME) $(OBJ_PATH)
-	gcc $(FLAGS) $(OPTFLAGS) $(INCLUDE_FLAG) $(OBJ_PATH)
+$(NAME) : $(OBJ) $(HEADERS)
+	gcc $(FLAGS) $(OBJ) -o $(NAME)
 
 bonus : all
 
@@ -63,4 +57,4 @@ fclean : clean
 
 re : fclean all
 
-.PHONY : all libft mlx obj clean fclean re bonus
+.PHONY : all obj clean fclean re bonus
