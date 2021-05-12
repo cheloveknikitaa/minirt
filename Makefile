@@ -6,7 +6,7 @@
 #    By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/10 22:20:54 by caugusta          #+#    #+#              #
-#    Updated: 2021/05/11 20:30:18 by caugusta         ###   ########.fr        #
+#    Updated: 2021/05/11 23:17:53 by caugusta         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,43 +22,50 @@ SOURCE_DIR			= source/
 SOURCE				= main.c
 
 LIBFT				= libft/$(LIBFT_NAME)
-LIBFT_PATH			= libft/
+LIBFT_DIR			= libft/
 MLX					= mlx/$(MLX_NAME)
-MLX_PATH			= mlx/
+MLX_DIR				= mlx/
 
 OBJ					= $(addprefix $(OBJ_DIR), $(SOURCE:.c=.o))
-D_FILES				= $(OBJ_DIR)%.d
+D_FILES				= $(wildcard $(OBJ_DIR)*.d)
 
 .PHONY : all sub_directory clean fclean re bonus
 
 all : sub_directory $(NAME)
+	@echo COMPLETE
 
 sub_directory :
 	@mkdir -p $(OBJ_DIR)
 
 $(OBJ_DIR)%.o : $(SOURCE_DIR)%.c
-	$(CC) -c -MMD $(CFLAGS) -I includes $< -o $@
+	@$(CC) -c -MMD $(CFLAGS) -I includes $< -o $@
 
 $(NAME) : $(MLX) $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) -lmlx -framework OpenGL -framework AppKit $^ -o $@
+	@$(CC) $(CFLAGS) -lmlx -framework OpenGL -framework AppKit $^ -o $@
+	@cp $(MLX) .
 
 $(LIBFT) :
-	@$(MAKE) -C $(LIBFT_PATH)
+	@$(MAKE) -C $(LIBFT_DIR) --silent
+	@echo LIBFT OK
 $(MLX) :
-	@$(MAKE) -C $(MLX_PATH)
+	@$(MAKE) -C $(MLX_DIR) --silent
+	@echo MLX OK
 
 include $(D_FILES)
 
 bonus : all
 
 clean :
-	@$(MAKE) clean -C $(LIBFT_PATH)
-	@$(MAKE) clean -C $(MLX_PATH)
-	@rm -rf $(OBJ_PATH)
+	@$(MAKE) clean -C $(LIBFT_DIR) --silent
+	@echo CLEAN LIBFT
+	@$(MAKE) clean -C $(MLX_DIR) --silent
+	@echo CLEAN MLX
+	@rm -rf $(OBJ_DIR)
 
 fclean : clean
-	@$(MAKE) fclean -C $(LIBFT_PATH)
-	@$(MAKE) clean -C $(MLX_PATH)
+	@$(MAKE) fclean -C $(LIBFT_DIR) --silent
+	@echo FCLEAN COMPLETE
+	@rm -f $(MLX_NAME) --silent
 	@rm -rf $(NAME)
 
 re : fclean all
