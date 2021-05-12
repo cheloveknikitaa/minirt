@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/17 00:26:44 by caugusta          #+#    #+#             */
-/*   Updated: 2021/04/23 18:39:01 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/05/12 20:20:51 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 # define LIBFT_H
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10000
+# endif
+
+int		get_next_line(int fd, char **line);
 
 typedef struct s_list
 {

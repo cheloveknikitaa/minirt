@@ -6,11 +6,11 @@
 #    By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/23 18:32:18 by caugusta          #+#    #+#              #
-#    Updated: 2021/05/10 23:41:07 by caugusta         ###   ########.fr        #
+#    Updated: 2021/05/12 19:20:00 by caugusta         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libft.a
+NAME		= libft.a
 
 SRC =		ft_atoi.c		ft_isalpha.c		ft_itoa.c\
 			ft_memcpy.c		ft_putendl_fd.c		ft_strdup.c\
@@ -27,33 +27,33 @@ SRC =		ft_atoi.c		ft_isalpha.c		ft_itoa.c\
 			ft_lstnew.c		ft_lstadd_front.c	ft_lstsize.c\
 			ft_lstlast.c	ft_lstadd_back.c	ft_lstdelone.c\
 			ft_lstclear.c	ft_lstiter.c		ft_lstmap.c\
-			
-HEADER = 	*.h
-OBJ_PATH = object
-OBJ = $(addprefix $(OBJ_PATH)/, $(SRC:.c=.o))
 
-OPTFLAGS = -O2
-FLAGS = -Wall -Wextra -Werror
+OBJ_DIR		= object/
+OBJ			= $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
+D_FILES		= $(wildcard $(OBJ_DIR)*.d)
 
-all : obj $(NAME)
+CC			= gcc
+CFLAGS		= -Wall -Wextra -Werror
 
-obj :
-	@mkdir -p $(OBJ_PATH)
+.PHONY : 	all sub_directory clean fclean re bonus
+
+all : sub_directory $(NAME)
+
+sub_directory :
+	@mkdir -p $(OBJ_DIR)
+
+$(OBJ_DIR)%.o : %.c $(HEADER)
+	$(CC) -c -MMD $(FLAGS) $< -o $@
 
 $(NAME) : $(OBJ)
 	ar rcs $(NAME) $?
 
-$(OBJ_PATH)/%.o : %.c $(HEADER)
-	@gcc $(FLAGS) $(OPTFLAGS) -I$(HEADER) -c $< -o $@
-
 bonus : all
 
 clean :
-	@rm -rf $(OBJ_PATH)
+	@rm -rf $(OBJ_DIR)
 
 fclean : clean
 	@rm -rf $(NAME)
 
 re : fclean all
-
-.PHONY : 	all clean fclean re bonus

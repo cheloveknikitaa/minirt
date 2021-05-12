@@ -6,11 +6,17 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 15:03:35 by caugusta          #+#    #+#             */
-/*   Updated: 2021/05/10 15:59:18 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/05/12 20:22:50 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
+
+static int	free_all(char **line, char *buf, char **keepread, int i);
+static int	find_n(char **line, char **keepread);
+static int	read_n_find(int fd, char *buffer_read, \
+						char **line, char **keepread);
+static char	*ft_strjoin_gnl(char *s1, char *s2);
 
 static int	free_all(char **line, char *buf, char **keepread, int i)
 {
@@ -78,7 +84,7 @@ static int	read_n_find(int fd, char *buffer_read, char **line, char **keepread)
 	return (free_all(line, buffer_read, keepread, 0));
 }
 
-char	*ft_strjoin_gnl(char *s1, char *s2)
+static char	*ft_strjoin_gnl(char *s1, char *s2)
 {
 	size_t	size;
 	char	*join;

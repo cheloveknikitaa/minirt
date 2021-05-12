@@ -6,7 +6,7 @@
 #    By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/10 22:20:54 by caugusta          #+#    #+#              #
-#    Updated: 2021/05/11 23:17:53 by caugusta         ###   ########.fr        #
+#    Updated: 2021/05/12 20:41:59 by caugusta         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,12 +40,13 @@ sub_directory :
 $(OBJ_DIR)%.o : $(SOURCE_DIR)%.c
 	@$(CC) -c -MMD $(CFLAGS) -I includes $< -o $@
 
-$(NAME) : $(MLX) $(OBJ) $(LIBFT)
+$(NAME) : $(MLX) $(LIBFT) $(OBJ)
 	@$(CC) $(CFLAGS) -lmlx -framework OpenGL -framework AppKit $^ -o $@
 	@cp $(MLX) .
 
 $(LIBFT) :
 	@$(MAKE) -C $(LIBFT_DIR) --silent
+	@cp $(LIBFT_DIR)/libft.h ./includes
 	@echo LIBFT OK
 $(MLX) :
 	@$(MAKE) -C $(MLX_DIR) --silent
@@ -67,5 +68,6 @@ fclean : clean
 	@echo FCLEAN COMPLETE
 	@rm -f $(MLX_NAME) --silent
 	@rm -rf $(NAME)
+	@rm -rf includes/libft.h
 
 re : fclean all
