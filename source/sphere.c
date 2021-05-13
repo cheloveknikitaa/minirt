@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_mlx.c                                        :+:      :+:    :+:   */
+/*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/13 01:21:31 by caugusta          #+#    #+#             */
-/*   Updated: 2021/05/13 15:44:19 by caugusta         ###   ########.fr       */
+/*   Created: 2021/05/10 22:54:45 by caugusta          #+#    #+#             */
+/*   Updated: 2021/05/13 15:29:24 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+t_vec2	*sphIntersect(t_vec3 *ro, t_vec3 *rd, float ra)
 {
-	char	*dst;
+	float	b;
+	float	c;
+	float	h;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
-
-t_vec3	*traceRay(t_vec3 *ro, t_vec3 rd)
-{
-	t_vec3	*col;
-	int		i;
-
-	col = new_vec3(1.0, 1.0, 1.0);
-	i = 0;
-	while (i < 8)
-	{
-		
-	}
+	b = vec3_dot(ro, rd);
+	c = vec3_dot(ro, ro) - ra * ra;
+	h = b * b - c;
+	if (h < 0.0)
+		return (new_vec2(-1.0, -1.0));
+	h = sqrt(h);
+	return (new_vec2(-b - h, -b + h));
 }
