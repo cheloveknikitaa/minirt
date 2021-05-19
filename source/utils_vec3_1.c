@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 22:49:36 by caugusta          #+#    #+#             */
-/*   Updated: 2021/05/13 01:43:40 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/05/19 06:34:23 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,16 @@ t_vec3	*vec3_reflect(t_vec3 *rd, t_vec3 *n)
 
 	reflect = vec3_sub(rd, vec3_mulS(n, 2 * vec3_dot(n, rd)));
 	return (reflect);
+}
+
+t_vec3	*vec3_div(t_vec3 *a, float c)
+{
+	t_vec3	*b;
+
+	b->x = a->x / c;
+	b->y = a->y / c;
+	b->z = a->z / c;
+	return (b);
 }
 
 t_vec3	*new_vec3(float x, float y, float z)

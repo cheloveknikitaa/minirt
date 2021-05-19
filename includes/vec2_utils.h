@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 21:14:03 by caugusta          #+#    #+#             */
-/*   Updated: 2021/05/13 01:42:49 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/05/18 23:01:29 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ typedef struct s_vec2
 {
 	float		x;
 	float		y;
-	double		direction_x;
-	double		direction_y;
 }				t_vec2;
 
 t_vec2	*vec2_add(t_vec2 *a, t_vec2 *b);

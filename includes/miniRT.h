@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 23:04:54 by caugusta          #+#    #+#             */
-/*   Updated: 2021/05/13 15:30:42 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/05/19 06:41:00 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ typedef struct s_data
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	t_vec3	color;
+	int		int_color;
 }				t_data;
 
 t_vec2	*sphIntersect(t_vec3 *ro, t_vec3 *rd, float ra);
