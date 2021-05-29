@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 01:21:31 by caugusta          #+#    #+#             */
-/*   Updated: 2021/05/13 15:44:19 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/05/29 01:52:57 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-t_vec3	*traceRay(t_vec3 *ro, t_vec3 rd)
+t_vec3	*traceRay(t_vec3 *ro, t_vec3 *rd)
 {
 	t_vec3	*col;
 	int		i;
@@ -31,4 +31,20 @@ t_vec3	*traceRay(t_vec3 *ro, t_vec3 rd)
 	{
 		
 	}
+}
+
+float	max(float a, float b)
+{
+	if (a > b)
+		return (a);
+	else
+		return (b);
+}
+
+float	min(float a, float b)
+{
+	if (a > b)
+		return (b);
+	else
+		return (a);
 }

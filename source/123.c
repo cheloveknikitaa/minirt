@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 22:47:08 by caugusta          #+#    #+#             */
-/*   Updated: 2021/05/19 06:42:39 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/05/28 00:50:10 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,49 +14,9 @@
 #include <stdlib.h>
 #include <math.h>
 
-typedef	struct s_mlx
-{
-	void *mlx_ptr;
-	void *win_ptr;
-	void *img_ptr;
-	int  *data;
-	int		bpp;
-	int	size_l;
-	int	endian;
-
-	t_vec	color;
-	int		int_color;
-
-} t_mlx;
-
-void	write_color(t_mlx *app, t_vec c)
-{
-	int	ir = 255.999 * c.x;
-	int	ig = 255.999 * c.y;
-	int	ib = 255.999 * c.z;
-
-	app->color.x = ir * 256 * 256;
-	app->color.y = ig * 256;
-	app->color.z = ib;
-	app->int_color = app->color.x + app->color.y + app->color.z;
-}
-
 t_vec	at(t_vec orig, t_vec dir, double t)
 {
 	return (v_add(orig, v_mul_n(dir, t)));
-}
-
-double	hit_sphere(t_vec center, double radius, t_vec origin, t_vec direction)
-{
-	t_vec oc = v_sub(origin, center);
-	float a = dot(direction, direction);
-	float b = 2.0 * dot(oc, direction);
-	float c = dot(oc, oc) - radius * radius;
-	float discriminant = b * b - 4 * a * c;
-	if (discriminant < 0)
-		return (-1.0);
-	else
-		return ((-b - sqrt(discriminant)) / (2.0 * a));
 }
 
 t_vec	ray_color(t_vec orig, t_vec dir)
@@ -97,10 +57,10 @@ int	main()
 	t_mlx	*app;
 	if (!(app = (t_mlx*)malloc(sizeof(t_mlx))))
 		return (-1);
-	app->mlx_ptr = mlx_init();
-	app->win_ptr = mlx_new_window(app->mlx_ptr, 800, 600, "raytracer");
-	app->img_ptr = mlx_new_image(app->mlx_ptr, image_width, image_height);
-	app->data = (int *)mlx_get_data_addr(app->img_ptr, &app->bpp, &app->size_l, &app->endian);
+	app->mlx = mlx_init();
+	app->win = mlx_new_window(app->mlx, 800, 600, "raytracer");
+	app->img = mlx_new_image(app->mlx, image_width, image_height);
+	app->addr = (int *)mlx_get_data_addr(app->img, &app->bits_per_pixel, &app->line_length, &app->endian);
 
 
 	// Camera
@@ -110,7 +70,8 @@ int	main()
 
 	t_vec	origin = {0,0,0};
 	t_vec	horizontal = {viewport_width, 0, 0};
-	t_vec	vertical = {0, viewport_height, 0}; t_vec any = {0, 0, focal_length};
+	t_vec	vertical = {0, viewport_height, 0};
+	t_vec	any = {0, 0, focal_length};
 	t_vec	lower_left_corner = v_sub(origin, v_add(v_add(v_div(horizontal, 2), v_div(vertical, 2)), any));
 
 	// Render
@@ -130,7 +91,7 @@ int	main()
 			t_vec b = v_add(lower_left_corner, v_add(v_mul_n(horizontal, u), v_mul_n(v_sub(vertical, origin), v)));
 			t_vec pixel_color = ray_color(a, b);
 			write_color(app, pixel_color);
-			mlx_pixel_put(app->mlx_ptr, app->win_ptr, i, jj, app->int_color);
+			mlx_pixel_put(app->mlx, app->win, i, jj, app->int_color);
 //			app->data[jj * 400 + i] = app->int_color;
 
 			++i;
@@ -139,5 +100,5 @@ int	main()
 		++jj; //예제의 점 찍히는 순서를 똑같이 하려고 jj를 따로 만들었음..
 	}
 //	mlx_put_image_to_window (app->mlx_ptr, app->win_ptr, app->img_ptr, 0, 0);
-	mlx_loop(app->mlx_ptr);
+	mlx_loop(app->mlx);
 }

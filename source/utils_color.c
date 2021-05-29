@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_utils.h                                        :+:      :+:    :+:   */
+/*   utils_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/13 01:24:36 by caugusta          #+#    #+#             */
-/*   Updated: 2021/05/29 01:53:10 by caugusta         ###   ########.fr       */
+/*   Created: 2021/05/27 21:12:10 by caugusta          #+#    #+#             */
+/*   Updated: 2021/05/27 21:23:46 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MLX_UTILS_H
-# define MLX_UTILS_H
-# include "miniRT.h"
+#include "miniRT.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-float	max(float a, float b);
-float	min(float a, float b);
+void	write_color(t_data *scene, t_vec3 ray)
+{
+	int	r;
+	int	g;
+	int	b;
 
-#endif
+	r = 255.999 * ray.x;
+	g = 255.999 * ray.y;
+	b = 255.999 * ray.z;
+	scene->color.x = r * 256 * 256;
+	scene->color.y = g * 256;
+	scene->color.z = b;
+	scene->int_color = scene->color.x + scene->color.y + scene->color.z;
+}
+
+t_vec3	ray_color(t_vec3 *ro, t_vec3 *rd)
+{
+	
+}
