@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 23:04:54 by caugusta          #+#    #+#             */
-/*   Updated: 2021/05/29 06:13:55 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/01 19:54:01 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,28 @@ typedef struct s_alight
 
 typedef struct s_cam
 {
-	t_vec3	*rd;
-	float	viewport_height;
-	float	viewport_width;
-	float	focal_lenght;
 	t_vec3	*ro;
+	t_vec3	*rd;
 	t_vec3	*horizontal;
 	t_vec3	*vertical;
-	t_vec3	*any;
+	t_vec3	*w;
+	t_vec3	*u;
+	t_vec3	*v;
 	t_vec3	*lower_left_corner;
 	int		FOV;
 }				t_cam;
+
+typedef struct s_scene
+{
+	int			width;
+	int			height;
+	float		aspect_ratio;
+	t_data		*mlx;
+	t_cam		*cam;
+	t_alight	*alight;
+	t_light		*light;
+	t_sphere	*sphere;
+}				t_scene;
+
 
 #endif
