@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 23:04:54 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/01 19:54:01 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/02 16:02:43 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_scene
 	int			width;
 	int			height;
 	float		aspect_ratio;
+	t_vec3		*vup;
 	t_data		*mlx;
 	t_cam		*cam;
 	t_alight	*alight;
