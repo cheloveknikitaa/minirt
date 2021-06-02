@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 19:06:14 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/01 22:34:48 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/02 16:07:40 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,25 @@ void	*init_mlx(t_data *mlx, int width, int height)
 }
 
 	// init cam
-void	*init_cam(t_cam *cam)
+void	*init_cam(t_cam *cam, float aspect, t_vec3 *vup)
 {
 	float	half_height;
 	float	half_width;
 
 	cam = malloc(sizeof(t_cam));
-	cam->ro = new_vec3(-50.0, 0, 20);
-	cam->rd = new_vec3(0, -0.3, 0.7);
-	
-	cam->FOV = 70;
+	cam->ro = new_vec3(-50.0, 0, 20);	// pars
+	cam->rd = new_vec3(0, -0.3, 0.7);	// pars
+	cam->FOV = 70;						// pars
+	half_height = tan(cam->FOV / 2);
+	half_width = aspect * half_height;
+	cam->w = vec3_norm(vec3_sub(cam->ro, cam->rd));
+	cam->u = vec3_norm(vec3_cross(vup, cam->w));
+	cam->v = vec3_cross(cam->w, cam->u);
+	cam->lower_left_corner = vec3_sub(vec3_sub(vec3_sub(cam->ro,
+					vec3_mulS(cam->u, half_width)),
+				vec3_mulS(cam->v, half_height)), cam->w);
+	cam->horizontal = vec3_mulS(cam->u, (half_width * 2));
+	cam->vertical = vec3_mulS(cam->v, (half_height * 2));
 }
 
 	// init lights
@@ -68,8 +77,10 @@ void	pars(void)
 	g_scene->width = 1920;
 	g_scene->height = 1080;
 	g_scene->aspect_ratio = 16.0 / 9.0;
+	g_scene->vup = new_vec3(0.0, 1.0, 0.0);
 	init_mlx(g_scene->mlx, g_scene->width, g_scene->height);
-	init_cam(g_scene->cam);
+	init_cam(g_scene->cam, g_scene->aspect_ratio, g_scene->vup);
+	init_sphere();
 }
 
 int		main(void)
