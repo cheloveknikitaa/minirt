@@ -16,6 +16,7 @@ t_vec3	*vec3_add(t_vec3 *a, t_vec3 *b)
 {
 	t_vec3	*add;
 
+	add = malloc(sizeof(t_vec3));
 	add->x = a->x + b->x;
 	add->y = a->y + b->y;
 	add->z = a->z + b->z;
@@ -26,6 +27,7 @@ t_vec3	*vec3_sub(t_vec3 *a, t_vec3 *b)
 {
 	t_vec3	*sub;
 
+	sub = malloc(sizeof(t_vec3));
 	sub->x = a->x - b->x;
 	sub->y = a->y - b->y;
 	sub->z = a->z - b->z;
@@ -36,6 +38,7 @@ t_vec3	*vec3_mul(t_vec3 *a, t_vec3 *b)
 {
 	t_vec3	*mul;
 
+	mul = malloc(sizeof(t_vec3));
 	mul->x = a->x * b->x;
 	mul->y = a->y * b->y;
 	mul->z = a->z * b->z;
@@ -46,6 +49,7 @@ t_vec3	*vec3_mulS(t_vec3 *a, float value)
 {
 	t_vec3	*mulS;
 
+	mulS = malloc(sizeof(t_vec3));
 	mulS->x = a->x * value;
 	mulS->y = a->y * value;
 	mulS->z = a->z * value;

@@ -20,18 +20,18 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-t_vec3	*traceRay(t_vec3 *ro, t_vec3 *rd)
-{
-	t_vec3	*col;
-	int		i;
-
-	col = new_vec3(1.0, 1.0, 1.0);
-	i = 0;
-	while (i < 8)
-	{
-		
-	}
-}
+//t_vec3	*traceRay(t_vec3 *ro, t_vec3 *rd)
+//{
+//	t_vec3	*col;
+//	int		i;
+//
+//	col = new_vec3(1.0, 1.0, 1.0);
+//	i = 0;
+//	while (i < 8)
+//	{
+//
+//	}
+//}
 
 float	max(float a, float b)
 {

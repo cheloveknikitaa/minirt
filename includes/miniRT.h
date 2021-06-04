@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 23:04:54 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/02 16:02:43 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/04 11:24:32 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,8 @@ typedef struct s_scene
 	t_sphere	*sphere;
 }				t_scene;
 
+void	write_color(t_data *scene, t_vec3 *ray);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int		ft_close(int keycode, t_data *vars);
 
 #endif

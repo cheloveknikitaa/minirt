@@ -6,7 +6,7 @@
 #    By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/10 22:20:54 by caugusta          #+#    #+#              #
-#    Updated: 2021/05/12 20:41:59 by caugusta         ###   ########.fr        #
+#    Updated: 2021/06/04 11:43:10 by caugusta         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ CFLAGS				= #-Wall -Wextra -Werror
 
 OBJ_DIR				= object/
 SOURCE_DIR			= source/
-SOURCE				= main.c
+SOURCE				= sphere.c	utils_hook.c	utils_vec2.c	utils_vec3.c	utils_vec3_2.c\
+						main.c	utils_color.c	utils_mlx.c	utils_vec2_1.c	utils_vec3_1.c
 
 LIBFT				= libft/$(LIBFT_NAME)
 LIBFT_DIR			= libft/
@@ -41,7 +42,7 @@ $(OBJ_DIR)%.o : $(SOURCE_DIR)%.c
 	@$(CC) -c -MMD $(CFLAGS) -I includes $< -o $@
 
 $(NAME) : $(MLX) $(LIBFT) $(OBJ)
-	@$(CC) $(CFLAGS) -lmlx -framework OpenGL -framework AppKit $^ -o $@
+	@$(CC) $(CFLAGS) -g -lmlx -framework OpenGL -framework AppKit $^ -o $@
 	@cp $(MLX) .
 
 $(LIBFT) :

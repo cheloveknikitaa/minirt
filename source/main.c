@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 19:06:14 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/02 16:07:40 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/04 11:47:27 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,30 @@
 
 t_scene		*g_scene;
 
+void	init_sphere(t_sphere *sphere);
+void	init_mlx(t_data *mlx, int width, int height);
+void	init_cam(t_cam *cam, float aspect, t_vec3 *vup);
+void	init_light(t_light *light, t_alight *alight);
+void	pars(void);
+t_vec3	*cast_ray(t_vec3 *ro, t_vec3 *rd);
+t_vec3	*get_ray(float u, float v);
+
+
 void	init_sphere(t_sphere *sphere)
 {
 	sphere = malloc(sizeof(t_sphere));
-	sphere->center = new_vec3(0.0, 0.0, 20.6);
-	sphere->ra = 12.6 / 2;
-	sphere->color = new_vec3(10, 0, 255);
-	sphere->next = NULL;
+	sphere->center = new_vec3(0.0, 0.0, 20.6);	// pars
+	sphere->ra = 12.6 / 2;						// pars
+	sphere->color = new_vec3(10, 0, 255);		// pars
+	sphere->next = NULL;						// pars
 }
 
 	// start mlx
-void	*init_mlx(t_data *mlx, int width, int height)
+void	init_mlx(t_data *mlx, int width, int height)
 {
 	mlx = malloc(sizeof(t_data));
-	if (mlx == NULL)
-		exit ;
+//	if (mlx == NULL)
+//		exit ;
 	mlx->mlx = mlx_init();
 	mlx->win = mlx_new_window(mlx->mlx, width, height, "miniRT");
 	mlx->img = mlx_new_image(mlx->mlx, width, height);
@@ -37,7 +46,7 @@ void	*init_mlx(t_data *mlx, int width, int height)
 }
 
 	// init cam
-void	*init_cam(t_cam *cam, float aspect, t_vec3 *vup)
+void	init_cam(t_cam *cam, float aspect, t_vec3 *vup)
 {
 	float	half_height;
 	float	half_width;
@@ -62,12 +71,12 @@ void	*init_cam(t_cam *cam, float aspect, t_vec3 *vup)
 void	init_light(t_light *light, t_alight *alight)
 {
 	light = malloc(sizeof(t_light));
-	light->ro = new_vec3(-40.0, 50.0, 0.0);
-	light->power = 0.6;
-	light->color = new_vec3(10, 0, 255);
+	light->ro = new_vec3(-40.0, 50.0, 0.0);		// pars
+	light->power = 0.6;							// pars
+	light->color = new_vec3(10, 0, 255);		// pars
 	alight = malloc(sizeof(t_alight));
-	alight->power = 0.2;
-	alight->color = new_vec3(255, 255, 255);
+	alight->power = 0.2;						// pars
+	alight->color = new_vec3(255, 255, 255);	// pars
 }
 
 	//pars
@@ -80,7 +89,34 @@ void	pars(void)
 	g_scene->vup = new_vec3(0.0, 1.0, 0.0);
 	init_mlx(g_scene->mlx, g_scene->width, g_scene->height);
 	init_cam(g_scene->cam, g_scene->aspect_ratio, g_scene->vup);
-	init_sphere();
+	init_light(g_scene->light, g_scene->alight);
+	init_sphere(g_scene->sphere);
+}
+
+t_vec3	*cast_ray(t_vec3 *ro, t_vec3 *rd)
+{
+	t_vec2	*it;
+	t_vec3	*itPos;
+	float	diffuse;
+
+	it = sphIntersect(ro, rd, g_scene->sphere->ra);
+	if (it->x < 0.0)
+		return (new_vec3(0.0, 0.0, 0.0));
+	itPos = vec3_add(ro, vec3_mulS(rd, it->x));
+	diffuse = vec3_dot(g_scene->light->ro, itPos);
+	return (new_vec3(diffuse, diffuse, diffuse));
+}
+
+t_vec3	*get_ray(float u, float v)
+{
+	t_cam	*cam;
+	t_vec3	*ray;
+
+	cam = g_scene->cam;
+	ray = vec3_add(cam->lower_left_corner,
+			vec3_add(vec3_mulS(cam->horizontal, u),
+				vec3_mulS(vec3_sub(cam->vertical, cam->ro), v)));
+	return (ray);
 }
 
 int		main(void)
@@ -101,12 +137,17 @@ int		main(void)
 		{
 			u = (double)i / (g_scene->width - 1);
 			v = (double)mlx_y / (g_scene->height - 1);
-			
+			write_color(g_scene->mlx, cast_ray(g_scene->cam->ro,
+					get_ray(u, v)));
+			my_mlx_pixel_put(g_scene->mlx, i, mlx_x, g_scene->mlx->int_color);
+			g_scene->mlx->addr[mlx_x + i] = g_scene->mlx->int_color;
+			i++;
 		}
+		mlx_y--;
+		mlx_x++;
 	}
-	my_mlx_pixel_put(g_scene->mlx, i, jj, g_scene->mlx->int_color);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
-	mlx_key_hook(mlx->win, ft_close, &mlx);
-	mlx_loop(mlx->mlx);
+	// mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
+	mlx_key_hook(g_scene->mlx->win, ft_close, &g_scene->mlx->mlx);
+	mlx_loop(g_scene->mlx->mlx);
 	return (0);
 }
