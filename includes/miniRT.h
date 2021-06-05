@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 23:04:54 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/04 11:24:32 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/05 22:03:14 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,39 +32,39 @@ typedef struct s_data
 	void	*img;
 	void	*mlx;
 	void	*win;
-	char	*addr;
+	int		*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-	t_vec3	*color;
+	t_vec3	color;
 	int		int_color;
 }				t_data;
 
 typedef struct s_light
 {
-	t_vec3		*ro;
+	t_vec3		ro;
 	double		power;
-	t_vec3		*color;
+	t_vec3		color;
 	int			int_color;
 }				t_light;
 
 typedef struct s_alight
 {
 	double		power;
-	t_vec3		*color;
+	t_vec3		color;
 	int			int_color;
 }				t_alight;
 
 typedef struct s_cam
 {
-	t_vec3	*ro;
-	t_vec3	*rd;
-	t_vec3	*horizontal;
-	t_vec3	*vertical;
-	t_vec3	*w;
-	t_vec3	*u;
-	t_vec3	*v;
-	t_vec3	*lower_left_corner;
+	t_vec3	ro;
+	t_vec3	rd;
+	t_vec3	horizontal;
+	t_vec3	vertical;
+	t_vec3	w;
+	t_vec3	u;
+	t_vec3	v;
+	t_vec3	lower_left_corner;
 	int		FOV;
 }				t_cam;
 
@@ -73,16 +73,19 @@ typedef struct s_scene
 	int			width;
 	int			height;
 	float		aspect_ratio;
-	t_vec3		*vup;
-	t_data		*mlx;
-	t_cam		*cam;
-	t_alight	*alight;
-	t_light		*light;
-	t_sphere	*sphere;
+	t_vec3		vup;
+	t_data		mlx;
+	t_cam		cam;
+	t_alight	alight;
+	t_light		light;
+	t_sphere	sphere[2];
 }				t_scene;
 
-void	write_color(t_data *scene, t_vec3 *ray);
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+t_scene		g_scene;
+
+void	write_color(t_data *scene, t_vec3 ray);
+void	my_mlx_pixel_put(t_data data, int x, int y, int color);
 int		ft_close(int keycode, t_data *vars);
+t_vec3	ray_color(t_vec3 ro, t_vec3 rd);
 
 #endif
