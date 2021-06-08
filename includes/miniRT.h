@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 23:04:54 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/08 06:15:38 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/08 15:44:02 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,7 @@ t_vec3	ray_color(t_vec3 ro, t_vec3 rd);
 t_vec3	mix_color(t_vec3 color1, t_vec3 color2);
 t_vec3	rgb_to_Yxy(t_vec3 color);
 t_vec3	Yxy_to_rgb(t_vec3 color);
+t_vec3	rgb_to_xyz(t_vec3 color);
+t_vec3	xyz_to_rgb(t_vec3 color);
 
 #endif

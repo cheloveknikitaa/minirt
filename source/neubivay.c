@@ -379,3 +379,44 @@ int	main()
 //	mlx_put_image_to_window (app->mlx_ptr, app->win_ptr, app->img_ptr, 0, 0);
 	mlx_loop(app->mlx_ptr);
 }
+
+
+t_vec3	rgb_to_Yxy(t_vec3 color)
+{
+	t_vec3	tmp;
+
+	color = vec3_mulS(color, 1 / 255.0);
+	color.x = powf(color.x, 2.19921875);
+	color.y = powf(color.y, 2.19921875);
+	color.z = powf(color.z, 2.19921875);
+	color = vec3_mulS(color, 100.0);
+	tmp.x = color.x * 0.57667 + color.y * 0.18555 + color.z * 0.18819;
+	tmp.y = color.x * 0.29738 + color.y * 0.62735 + color.z * 0.07527;
+	tmp.z = color.x * 0.02703 + color.y * 0.07069 + color.z * 0.99110;
+	color = tmp;
+	// printf("X = %f Y = %f, Z = %f\n", color.x, color.y, color.z);
+	tmp.z = tmp.y;
+	tmp.x = color.x / (color.x + color.y + color.z);
+	tmp.y = color.y / (color.x + color.y + color.z);
+	// printf("x= %f y = %f, Y = %f\n", tmp.x, tmp.y, tmp.z);
+	return (tmp);
+}
+
+t_vec3	Yxy_to_rgb(t_vec3 color)
+{
+	t_vec3	tmp;
+
+	tmp.x = color.x * (color.z / color.y);
+	tmp.y = color.z;
+	tmp.z = (1 - color.x - color.y) * (color.z / color.y);
+	color = vec3_mulS(tmp, 1 / 100.0);
+	tmp.x = color.x * 2.04137 + color.y * -0.56495 + color.z * -0.34469;
+	tmp.y = color.x * -0.96927 + color.y * 1.87601 + color.z * 0.04156;
+	tmp.z = color.x * 0.01345 + color.y * -0.11839 + color.z * 1.01541;
+	color.x = powf(tmp.x, 1 / 2.19921875);
+	color.y = powf(tmp.y, 1 / 2.19921875);
+	color.z = powf(tmp.z, 1 / 2.19921875);
+	color = vec3_mulS(color, 255.0);
+	// printf("r = %f g = %f, b = %f\n", color.x, color.y, color.z);
+	return (color);
+}

@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/05 10:45:06 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/08 06:30:21 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/08 16:09:34 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ t_vec3	get_ray(float u, float v);
 
 void	init_sphere(t_sphere *sphere)
 {
-	sphere->center = new_vec3(0.0, 0.0, -3.5);	// pars
+	sphere->center = new_vec3(3.0, 0.0, -3.5);	// pars
 	sphere->ra = 1;						// pars
 	sphere->color = new_vec3(255, 0, 0);		// pars
 }
 
 void	init_sphere1(t_sphere *sphere)
 {
-	sphere->center = new_vec3(0.0, 0.0, -13);	// pars
-	sphere->ra = 9.9;						// pars
-	sphere->color = new_vec3(0, 0, 255);		// pars
+	sphere->center = new_vec3(-3.0, 0.0, -3.5);	// pars
+	sphere->ra = 1;						// pars
+	sphere->color = new_vec3(0, 255, 0);		// pars
 }
 
 void	init_pl(t_plane	*pl)
@@ -90,11 +90,11 @@ t_vec3	get_ray(float u, float v)
 	// init lights
 void	init_light(t_light *light, t_alight *alight)
 {
-	light->ro = new_vec3(3.0, -3.0, -1.0);		// pars
-	light->power = 0.9;							// pars
-	light->color = new_vec3(255, 255, 255);		// pars
-	alight->power = 0.2;						// pars
-	alight->color = new_vec3(255, 255, 255);	// pars
+	light->ro = new_vec3(0.0, 0.0, -3.5);		// pars
+	light->power = 0.5;							// pars
+	light->color = vec3_mulS(new_vec3(255, 0, 0), light->power);		// pars
+	alight->power = 0.1;						// pars
+	alight->color = vec3_mulS(new_vec3(255, 255, 255), alight->power);	// pars
 }
 
 	//pars
