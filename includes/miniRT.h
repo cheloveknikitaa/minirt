@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 23:04:54 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/05 22:03:14 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/08 06:15:38 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "mlx_utils.h"
 # include "hook_utils.h"
 # include "sphere_utils.h"
+# include "plane_utils.h"
 
 # include <math.h>
 # include <stdio.h>
@@ -79,6 +80,7 @@ typedef struct s_scene
 	t_alight	alight;
 	t_light		light;
 	t_sphere	sphere[2];
+	t_plane		plane;
 }				t_scene;
 
 t_scene		g_scene;
@@ -87,5 +89,8 @@ void	write_color(t_data *scene, t_vec3 ray);
 void	my_mlx_pixel_put(t_data data, int x, int y, int color);
 int		ft_close(int keycode, t_data *vars);
 t_vec3	ray_color(t_vec3 ro, t_vec3 rd);
+t_vec3	mix_color(t_vec3 color1, t_vec3 color2);
+t_vec3	rgb_to_Yxy(t_vec3 color);
+t_vec3	Yxy_to_rgb(t_vec3 color);
 
 #endif

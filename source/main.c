@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/05 10:45:06 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/05 22:13:12 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/08 06:30:21 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,23 @@ t_vec3	get_ray(float u, float v);
 
 void	init_sphere(t_sphere *sphere)
 {
-	sphere->center = new_vec3(0.0, 0.0, -3);	// pars
-	sphere->ra = 0.5;						// pars
+	sphere->center = new_vec3(0.0, 0.0, -3.5);	// pars
+	sphere->ra = 1;						// pars
 	sphere->color = new_vec3(255, 0, 0);		// pars
 }
+
 void	init_sphere1(t_sphere *sphere)
 {
-	sphere->center = new_vec3(0.0, 0.0, -4);	// pars
-	sphere->ra = 0.9;						// pars
+	sphere->center = new_vec3(0.0, 0.0, -13);	// pars
+	sphere->ra = 9.9;						// pars
 	sphere->color = new_vec3(0, 0, 255);		// pars
+}
+
+void	init_pl(t_plane	*pl)
+{
+	pl->ro = new_vec3(0, 0, -4);
+	pl->rd = new_vec3(0, 0, -1);
+	pl->color = new_vec3(0, 255, 0);
 }
 
 	// start mlx
@@ -52,7 +60,7 @@ void	init_cam(t_cam *cam, float aspect, t_vec3 vup)
 	float	half_height;
 	float	half_width;
 
-	cam->ro = new_vec3(0.0, 0.0, 0);	// pars
+	cam->ro = new_vec3(0.0, 0.0, 10.0);	// pars
 	cam->rd = new_vec3(0.0, 0.0, -1.0);	// pars
 	cam->FOV = 70;						// pars
 	half_height = tan(cam->FOV / 2);
@@ -67,12 +75,24 @@ void	init_cam(t_cam *cam, float aspect, t_vec3 vup)
 	cam->vertical = vec3_mulS(cam->v, (half_height * 2));
 }
 
+t_vec3	get_ray(float u, float v)
+{
+	t_cam	cam;
+	t_vec3	ray;
+
+	cam = g_scene.cam;
+	ray = vec3_add(cam.lower_left_corner,
+			vec3_add(vec3_mulS(cam.horizontal, u),
+				vec3_sub(vec3_mulS(cam.vertical, v), cam.ro)));
+	return (vec3_norm(ray));
+}
+
 	// init lights
 void	init_light(t_light *light, t_alight *alight)
 {
-	light->ro = new_vec3(-3.0, -3.0, -1.0);		// pars
-	light->power = 0.6;							// pars
-	light->color = new_vec3(10, 0, 255);		// pars
+	light->ro = new_vec3(3.0, -3.0, -1.0);		// pars
+	light->power = 0.9;							// pars
+	light->color = new_vec3(255, 255, 255);		// pars
 	alight->power = 0.2;						// pars
 	alight->color = new_vec3(255, 255, 255);	// pars
 }
@@ -89,32 +109,7 @@ void	pars(void)
 	init_light(&g_scene.light, &g_scene.alight);
 	init_sphere(&g_scene.sphere[0]);
 	init_sphere1(&g_scene.sphere[1]);
-}
-
-// t_vec3	cast_ray(t_vec3 ro, t_vec3 rd)
-// {
-// 	t_vec2	it;
-// 	t_vec3	itPos;
-// 	float	diffuse;
-
-// 	it = sphIntersect(ro, rd, g_scene.sphere.ra, g_scene.sphere.center);
-// 	if (it.x < 0.0)
-// 		return (new_vec3(0.0, 0.0, 0.0));
-// 	itPos = vec3_add(ro, vec3_mulS(rd, it.x));
-// 	diffuse = vec3_dot(g_scene.light.ro, itPos);
-// 	return (new_vec3(diffuse, diffuse, diffuse));
-// }
-
-t_vec3	get_ray(float u, float v)
-{
-	t_cam	cam;
-	t_vec3	ray;
-
-	cam = g_scene.cam;
-	ray = vec3_add(cam.lower_left_corner,
-			vec3_add(vec3_mulS(cam.horizontal, u),
-				vec3_mulS(vec3_sub(cam.vertical, cam.ro), v)));
-	return (ray);
+	init_pl(&g_scene.plane);
 }
 
 int		main(void)
@@ -141,7 +136,6 @@ int		main(void)
 		}
 		j++;
 	}
-//	mlx_put_image_to_window(g_scene.mlx.mlx, g_scene.mlx.win, g_scene.mlx.img, i, j);
 	mlx_key_hook(g_scene.mlx.win, ft_close, &g_scene.mlx.mlx);
 	mlx_loop(g_scene.mlx.mlx);
 	return (0);
