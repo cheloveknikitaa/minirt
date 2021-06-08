@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 21:12:10 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/08 16:08:34 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/08 17:43:07 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_vec3	ray_color(t_vec3 ro, t_vec3 rd)
 	}
 	if (mint.x < MAX_DIST)
 		return (vec3_mulS(g_scene.mlx.color, diffuse * 0.003));
-	return (new_vec3(0, 0, 0));
+	return (new_vec3(1, 1, 1));
 }
 
 t_vec3	mix_color(t_vec3 color1, t_vec3 color2)
@@ -76,15 +76,32 @@ t_vec3	mix_color(t_vec3 color1, t_vec3 color2)
 	t_vec3	mix;
 	t_vec3	inter;
 
-	color1_mko = rgb_to_Yxy(color1);
-	color2_mko = rgb_to_Yxy(color2);
-	mix.x = (color1_mko.x * color1_mko.z / color1_mko.y + \
-			color2_mko.x * color2_mko.z / color2_mko.y) / \
-			(color1_mko.z / color1_mko.y + color2_mko.z / color2_mko.y);
-	mix.y = (color1_mko.y * color1_mko.z / color1_mko.y + \
-			color2_mko.y * color2_mko.z / color2_mko.y) / \
-			(color1_mko.z / color1_mko.y + color2_mko.z / color2_mko.y);
-	mix.z = color1_mko.z + color2_mko.z;
+	// printf("color1r = %f g = %f, b = %f\n", color1.x, color1.y, color1.z);
+	// printf("color2r = %f g = %f, b = %f\n", color2.x, color2.y, color2.z);
+	color1 = vec3_mul(color1, vec3_mulS(color2, 1 / 255.0));
+	if (color1.x > 255.0)
+		color1.x = 255.0;
+	if (color1.x < 0)
+		color1.x = 0.0;
+	if (color1.y > 255.0)
+		color1.y = 255.0;
+	if (color1.y < 0)
+		color1.y = 0.0;
+	if (color1.z > 255.0)
+		color1.z = 255.0;
+	if (color1.z < 0)
+		color1.z = 0.0;
+	// printf("r = %f g = %f, b = %f\n", color1.x, color1.y, color1.z);
+
+	// color1_mko = rgb_to_Yxy(color1);
+	// color2_mko = rgb_to_Yxy(color2);
+	// mix.x = (color1_mko.x * color1_mko.z / color1_mko.y + \
+	// 		color2_mko.x * color2_mko.z / color2_mko.y) / \
+	// 		(color1_mko.z / color1_mko.y + color2_mko.z / color2_mko.y);
+	// mix.y = (color1_mko.y * color1_mko.z / color1_mko.y + \
+	// 		color2_mko.y * color2_mko.z / color2_mko.y) / \
+	// 		(color1_mko.z / color1_mko.y + color2_mko.z / color2_mko.y);
+	// mix.z = color1_mko.z + color2_mko.z;
 	
 	// inter.x = (mix.x - 0.735) * (0.265 - 0.717) - (mix.y - 0.265) * (0.735 - 0.274);
 	// inter.y = (mix.x - 0.274) * (0.717 - 0.009) - (mix.y - 0.717) * (0.274 - 0.167);
@@ -93,8 +110,8 @@ t_vec3	mix_color(t_vec3 color1, t_vec3 color2)
 	// 	;
 	// else
 	// 	return(new_vec3(1.0, 1.0, 1.0));
-	mix = Yxy_to_rgb(mix);
-	return (mix);
+	//mix = Yxy_to_rgb(mix);
+	return (color1);
 }
 
 t_vec3	rgb_to_Yxy(t_vec3 color)
