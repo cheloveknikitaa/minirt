@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 22:54:45 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/08 20:35:17 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/08 22:52:38 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,10 @@ t_vec3	sphdiffuse(t_vec3 ro, t_vec3 rd, t_vec2 t, int i)
 				g_scene.sphere[i].center));
 	lightDir = vec3_sub(g_scene.light.ro, g_scene.sphere[i].center);
 	diffuse.x = max(vec3_dot(vec3_mulS(vec3_norm(lightDir),
-					g_scene.light.power), n), 0.0) * 0.003;
-	diffuse.y = diffuse.x;
-	diffuse.z = diffuse.x;
+					g_scene.light.power), n), 0.0);
+	diffuse.y = diffuse.x * 0.0002;
+	diffuse.z = diffuse.x * 0.0007;
+	diffuse.x = diffuse.x * 0.0005;
 	return (diffuse);
 }
 
@@ -75,7 +76,7 @@ t_vec3	sphspecular(t_vec3 ro, t_vec3 rd, t_vec2 t, int i)
 	viewdir = vec3_norm(vec3_sub(ro, g_scene.sphere[i].center));
 	reflectdir = vec3_norm(vec3_reflect(vec3_mulS(vec3_sub(g_scene.light.ro,
 						g_scene.sphere[i].center), -1), n));
-	spec = pow(max(vec3_dot(viewdir, reflectdir), 0.0), SPEC_STRNG) * 0.0000060;
+	spec = powf(max(vec3_dot(viewdir, reflectdir), 0.0), SPEC_STRNG) * 0.000007;
 	specular = vec3_mulS(g_scene.light.color, spec);
 	return (specular);
 }

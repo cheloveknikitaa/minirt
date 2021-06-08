@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 23:04:54 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/08 20:36:31 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/08 21:02:42 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # define MAX_REF 8
-# define SPEC_STRNG 2.0
+# define SPEC_STRNG 32.0
 # define MAX_DIST 99999.0
 
 typedef struct s_data
