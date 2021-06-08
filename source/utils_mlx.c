@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 01:21:31 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/05 10:49:49 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/08 18:10:45 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 //	}
 //}
 
-float	max(float a, float b)
+double	max(double a, double b)
 {
 	if (a > b)
 		return (a);
@@ -41,7 +41,7 @@ float	max(float a, float b)
 		return (b);
 }
 
-float	min(float a, float b)
+double	min(double a, double b)
 {
 	if (a > b)
 		return (b);

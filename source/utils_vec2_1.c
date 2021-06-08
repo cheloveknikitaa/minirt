@@ -6,15 +6,15 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 21:10:19 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/05 10:39:47 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/08 18:10:45 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-float	vec2_lenght(t_vec2 a)
+double	vec2_lenght(t_vec2 a)
 {
-	float	len;
+	double	len;
 
 	len = sqrt(a.x * a.x + a.y * a.y);
 	return (len);
@@ -34,7 +34,7 @@ t_vec2	vec2_reflect(t_vec2 rd, t_vec2 n)
 	return (reflect);
 }
 
-t_vec2	new_vec2(float x, float y)
+t_vec2	new_vec2(double x, double y)
 {
 	t_vec2	new;
 

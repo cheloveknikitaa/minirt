@@ -6,9 +6,9 @@
 
 typedef struct	s_vec3
 {
-	float x;
-	float y;
-	float z;
+	double x;
+	double y;
+	double z;
 }		t_vec3;
 
 typedef	struct s_mlx
@@ -28,7 +28,7 @@ typedef	struct s_mlx
 
 
 
-t_vec3	make_vec(float n)
+t_vec3	make_vec(double n)
 {
 	t_vec3 result;
 
@@ -37,7 +37,7 @@ t_vec3	make_vec(float n)
 	result.z = n;
 	return (result);
 }
-t_vec3	v_mul_n(t_vec3 v1, float n)
+t_vec3	v_mul_n(t_vec3 v1, double n)
 {
 	t_vec3	result;
 
@@ -77,7 +77,7 @@ t_vec3	v_add(t_vec3 v1, t_vec3 v2)
 	return (result);
 }
 
-t_vec3	v_div_n(t_vec3 v1, float n)
+t_vec3	v_div_n(t_vec3 v1, double n)
 {
 	t_vec3	result;
 
@@ -86,17 +86,17 @@ t_vec3	v_div_n(t_vec3 v1, float n)
 	result.z = v1.z / n;
 	return (result);
 }
-float	dot(t_vec3 v1, t_vec3 v2)
+double	dot(t_vec3 v1, t_vec3 v2)
 {
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
 
-float	length_squared(t_vec3 e)
+double	length_squared(t_vec3 e)
 {
 	return (e.x * e.x + e.y * e.y + e.z * e.z);
 }
 
-float	length(t_vec3 e)
+double	length(t_vec3 e)
 {
 	return (sqrt(length_squared(e)));
 }
@@ -150,9 +150,9 @@ typedef struct 	s_sphere
 
 double	hit_sphere(t_sphere s, t_ray r)
 {
-	float	b;
-	float	c;
-	float	h;
+	double	b;
+	double	c;
+	double	h;
 	t_vec3 oc = v_sub(r.orig, s.center);
 
 	b = dot(oc, r.dir);
@@ -201,7 +201,7 @@ int	hittable_list_hit(t_ray r, double t_min, double t_max, t_hit_record rec, t_h
 
 t_vec3	ray_color(t_ray r, t_hittable_list world)
 {
-	float t = hit_sphere(world.sp[0], r);
+	double t = hit_sphere(world.sp[0], r);
 	if (t > 0.0)
 	{
 		t_vec3 n = unit_vector(v_sub(at(r, t), world.sp[0].center));
@@ -248,15 +248,15 @@ void	set_face_normal(t_vec3 direction, t_vec3 normal, t_vec3 outward_normal, int
 int	hit(t_ray r, double t_min, double t_max, t_hit_record rec, t_sphere s)
 {
 	t_vec3 oc = v_sub(r.orig, s.center);
-	float a = length_squared(r.dir);
-	float half_b = dot(oc, r.dir);
-	float c = length_squared(oc) - s.radius * s.radius;
-	float discriminant = half_b * half_b - a * c;
+	double a = length_squared(r.dir);
+	double half_b = dot(oc, r.dir);
+	double c = length_squared(oc) - s.radius * s.radius;
+	double discriminant = half_b * half_b - a * c;
 
 	if (discriminant > 0)
 	{
-		float root = sqrt(discriminant);
-		float temp = (-half_b - root) / a;
+		double root = sqrt(discriminant);
+		double temp = (-half_b - root) / a;
 		if (temp < t_max && temp > t_min)
 		{
 			rec.t = temp;
@@ -282,7 +282,7 @@ int	hittable_list_hit(t_ray r, double t_min, double t_max, t_hit_record rec, t_h
 {
 	t_hit_record	temp_rec;
 	int	hit_anything = 0;
-	float	closest_so_far = t_max;
+	double	closest_so_far = t_max;
 
 	int	i = 0;
 
@@ -316,7 +316,7 @@ double	degrees_to_radians(double degrees)
 int	main()
 {
 	// Image
-	const float	aspect_ratio = 16.0 / 9.0;
+	const double	aspect_ratio = 16.0 / 9.0;
 	const int	image_width = 1920;
 	const int	image_height = image_width / aspect_ratio;
 
@@ -343,9 +343,9 @@ int	main()
 	world.sp[1].radius = 100;
 
 	// Camera
-	float	viewport_height = 2.0;
-	float	viewport_width = aspect_ratio * viewport_height;
-	float	focal_length = 1.0;
+	double	viewport_height = 2.0;
+	double	viewport_width = aspect_ratio * viewport_height;
+	double	focal_length = 1.0;
 
 	t_vec3	origin = {0.5,0,0};
 	t_vec3	horizontal = {viewport_width, 0, 0};
@@ -361,8 +361,8 @@ int	main()
 		while (i < image_width)
 		{
 
-			float u = (double)i / (image_width - 1);
-			float v = (image_height - (double)j - 1)/ (image_height - 1);
+			double u = (double)i / (image_width - 1);
+			double v = (image_height - (double)j - 1)/ (image_height - 1);
 
 			t_ray r;
 			r.orig = origin;

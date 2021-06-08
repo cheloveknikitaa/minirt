@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/12 19:03:23 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/05 10:39:16 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/08 18:10:45 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_vec2	vec2_mul(t_vec2 a, t_vec2 b)
 	return (mul);
 }
 
-t_vec2	vec2_mulS(t_vec2 a, float value)
+t_vec2	vec2_mulS(t_vec2 a, double value)
 {
 	t_vec2	mulS;
 

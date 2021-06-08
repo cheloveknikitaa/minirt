@@ -6,17 +6,17 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 22:54:45 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/08 17:09:40 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/08 20:35:17 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-t_vec2	sphIntersect(t_vec3 ro, t_vec3 rd, float ra, t_vec3 center)
+t_vec2	sphIntersect(t_vec3 ro, t_vec3 rd, double ra, t_vec3 center)
 {
-	float	b;
-	float	c;
-	float	h;
+	double	b;
+	double	c;
+	double	h;
 	t_vec3	oc;
 
 	oc = vec3_sub(ro, center);
@@ -29,11 +29,11 @@ t_vec2	sphIntersect(t_vec3 ro, t_vec3 rd, float ra, t_vec3 center)
 	return (new_vec2((-b - h), (-b + h)));
 }
 
-// float	sphresult(t_vec3 ro, t_vec3 rd, int i, t_vec2 t)
+// double	sphresult(t_vec3 ro, t_vec3 rd, int i, t_vec2 t)
 // {
 // 	t_vec3	n;
 // 	t_vec3	lightDir;
-// 	float	spec;
+// 	double	spec;
 // 	t_vec3	specular;
 // 	t_vec3	reflectDir;
 
@@ -45,3 +45,37 @@ t_vec2	sphIntersect(t_vec3 ro, t_vec3 rd, float ra, t_vec3 center)
 // 	g_scene.mlx.color = mix_color(mix_color(g_scene.sphere[i].color,
 // 				g_scene.light.color), g_scene.alight.color);
 // }
+
+t_vec3	sphdiffuse(t_vec3 ro, t_vec3 rd, t_vec2 t, int i)
+{
+	t_vec3	n;
+	t_vec3	lightDir;
+	t_vec3	diffuse;
+
+	n = vec3_norm(vec3_sub(vec3_add(ro, vec3_mulS(rd, t.x * 0.99)),
+				g_scene.sphere[i].center));
+	lightDir = vec3_sub(g_scene.light.ro, g_scene.sphere[i].center);
+	diffuse.x = max(vec3_dot(vec3_mulS(vec3_norm(lightDir),
+					g_scene.light.power), n), 0.0) * 0.003;
+	diffuse.y = diffuse.x;
+	diffuse.z = diffuse.x;
+	return (diffuse);
+}
+
+t_vec3	sphspecular(t_vec3 ro, t_vec3 rd, t_vec2 t, int i)
+{
+	t_vec3	n;
+	double	spec;
+	t_vec3	specular;
+	t_vec3	viewdir;
+	t_vec3	reflectdir;
+
+	n = vec3_norm(vec3_sub(vec3_add(ro, vec3_mulS(rd, t.x * 0.99)),
+				g_scene.sphere[i].center));
+	viewdir = vec3_norm(vec3_sub(ro, g_scene.sphere[i].center));
+	reflectdir = vec3_norm(vec3_reflect(vec3_mulS(vec3_sub(g_scene.light.ro,
+						g_scene.sphere[i].center), -1), n));
+	spec = pow(max(vec3_dot(viewdir, reflectdir), 0.0), SPEC_STRNG) * 0.0000060;
+	specular = vec3_mulS(g_scene.light.color, spec);
+	return (specular);
+}

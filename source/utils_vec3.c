@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/05 10:35:19 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/05 10:35:44 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/08 18:10:45 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_vec3	vec3_mul(t_vec3 a, t_vec3 b)
 	return (mul);
 }
 
-t_vec3	vec3_mulS(t_vec3 a, float value)
+t_vec3	vec3_mulS(t_vec3 a, double value)
 {
 	t_vec3	mulS;
 
@@ -52,9 +52,9 @@ t_vec3	vec3_mulS(t_vec3 a, float value)
 	return (mulS);
 }
 
-float	vec3_dot(t_vec3 a, t_vec3 b)
+double	vec3_dot(t_vec3 a, t_vec3 b)
 {
-	float	dot;
+	double	dot;
 
 	dot = a.x * b.x + a.y * b.y + a.z * b.z;
 	return (dot);

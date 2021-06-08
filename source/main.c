@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/05 10:45:06 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/08 17:26:35 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/08 18:30:56 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	init_sphere(t_sphere *sphere);
 void	init_mlx(t_data *mlx, int width, int height);
-void	init_cam(t_cam *cam, float aspect, t_vec3 vup);
+void	init_cam(t_cam *cam, double aspect, t_vec3 vup);
 void	init_light(t_light *light, t_alight *alight);
 void	pars(void);
 t_vec3	cast_ray(t_vec3 ro, t_vec3 rd);
-t_vec3	get_ray(float u, float v);
+t_vec3	get_ray(double u, double v);
 
 
 void	init_sphere(t_sphere *sphere)
@@ -55,10 +55,10 @@ void	init_mlx(t_data *mlx, int width, int height)
 }
 
 	// init cam
-void	init_cam(t_cam *cam, float aspect, t_vec3 vup)
+void	init_cam(t_cam *cam, double aspect, t_vec3 vup)
 {
-	float	half_height;
-	float	half_width;
+	double	half_height;
+	double	half_width;
 
 	cam->ro = new_vec3(0.0, 0.0, 10.0);	// pars
 	cam->rd = new_vec3(0.0, 0.0, -1.0);	// pars
@@ -75,7 +75,7 @@ void	init_cam(t_cam *cam, float aspect, t_vec3 vup)
 	cam->vertical = vec3_mulS(cam->v, (half_height * 2));
 }
 
-t_vec3	get_ray(float u, float v)
+t_vec3	get_ray(double u, double v)
 {
 	t_cam	cam;
 	t_vec3	ray;
@@ -93,7 +93,7 @@ void	init_light(t_light *light, t_alight *alight)
 	light->ro = new_vec3(0.0, 0.0, -3.5);		// pars
 	light->power = 1.0;							// pars
 	light->color = vec3_mulS(new_vec3(255, 255, 255), light->power);		// pars
-	alight->power = 0.1;						// pars
+	alight->power = 0.3;						// pars
 	alight->color = vec3_mulS(new_vec3(255, 255, 255), alight->power);	// pars
 	// alight->color = rgb_to_xyz(alight->color);
 	light->color = vec3_add(light->color, alight->color);
@@ -109,6 +109,7 @@ void	init_light(t_light *light, t_alight *alight)
 		light->color.z = 255.0;
 	if (light->color.z < 0)
 		light->color.z = 0.0;
+	alight->color = vec3_mulS(alight->color, 1 / 255);
 }
 
 	//pars
@@ -130,8 +131,8 @@ int		main(void)
 {
 	int		j;
 	int		i;
-	float	u;
-	float	v;
+	double	u;
+	double	v;
 
 	pars();
 	j = 0;

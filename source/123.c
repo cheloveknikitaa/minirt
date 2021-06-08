@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 22:47:08 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/01 16:39:07 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/08 18:10:45 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_vec	at(t_vec orig, t_vec dir, double t)
 t_vec	ray_color(t_vec orig, t_vec dir)
 {
 	t_vec sphere = {0, 0, -1};
-	float t = hit_sphere(sphere, 0.5, orig, dir);
+	double t = hit_sphere(sphere, 0.5, orig, dir);
 	if (t > 0.0)
 	{
 		t_vec N = unit_vector(v_sub(at(orig, dir, t), sphere));
@@ -49,7 +49,7 @@ t_vec	ray_color(t_vec orig, t_vec dir)
 int	main()
 {
 	// Image
-	const float	aspect_ratio = 16.0 / 9.0;
+	const double	aspect_ratio = 16.0 / 9.0;
 	const int	image_width = 400;
 	const int	image_height = image_width / aspect_ratio;
 
@@ -64,9 +64,9 @@ int	main()
 
 
 	// Camera
-	float	viewport_height = 2.0;
-	float	viewport_width = aspect_ratio * viewport_height;
-	float	focal_length = 1.0;
+	double	viewport_height = 2.0;
+	double	viewport_width = aspect_ratio * viewport_height;
+	double	focal_length = 1.0;
 
 	t_vec	origin = {0,0,0};
 	t_vec	horizontal = {viewport_width, 0, 0};
@@ -84,8 +84,8 @@ int	main()
 		while (i < image_width)
 		{
 
-			float u = (double)i / (image_width - 1);
-			float v = (double)j / (image_height - 1);
+			double u = (double)i / (image_width - 1);
+			double v = (double)j / (image_height - 1);
 
 			t_vec a = origin;
 			t_vec b = v_add(lower_left_corner, v_add(v_mul_n(horizontal, u), v_mul_n(v_sub(vertical, origin), v)));
