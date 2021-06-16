@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 21:12:10 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/08 20:58:41 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/16 19:15:43 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,22 @@ void	write_color(t_data *scene, t_vec3 ray)
 t_vec3	ray_color(t_vec3 ro, t_vec3 rd)
 {
 	t_vec2	t;
-	t_vec2	mint;
-	t_vec3	specular;
-	t_vec3	diffuse;
+	double	mint;
+	double	diffuse;
 	int		i;
 
 	i = 0;
-	mint = new_vec2(MAX_DIST, MAX_DIST);
+	mint = MAX_DIST;
 	while (i < 2)
 	{
 		t = sphIntersect(ro, rd, g_scene.sphere[i].ra,
 				g_scene.sphere[i].center);
-		if (t.x > 0.0 && t.x < mint.x)
+		if ((t.x > 0.0 && t.x < mint) || (t.y > 0.0 && t.y < mint))
 		{
-			mint = t;
-			diffuse = sphdiffuse(ro, rd, t, i);
-			specular = sphspecular(ro, rd, t, i);
-			g_scene.mlx.color = vec3_mul(g_scene.sphere[i].color,
-					vec3_mulS(g_scene.light.color, 1 / 255.0));
+			mint = min(t.x, t.y);
+			diffuse = sphdiffuse(ro, rd, mint, i);
+			// specular = sphspecular(ro, rd, t, i);
+			g_scene.mlx.color = vec3_mulS(g_scene.sphere[i].color, diffuse);
 		}
 		// t.x = plaIntersect(rd, rd, g_scene.plane);
 		// if (t.x > 0.0 && t.x < mint.x)
@@ -60,8 +58,7 @@ t_vec3	ray_color(t_vec3 ro, t_vec3 rd)
 		// }
 		i++;
 	}
-	if (mint.x < MAX_DIST)
-		return (vec3_mul(g_scene.mlx.color,
-				vec3_add(specular, vec3_add(diffuse, g_scene.alight.color))));
+	if (mint < MAX_DIST)
+		return (g_scene.mlx.color);
 	return (new_vec3(0, 0, 0));
 }

@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 23:04:54 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/08 21:02:42 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/16 19:15:31 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # define MAX_REF 8
-# define SPEC_STRNG 32.0
+# define SPEC_STRNG 256.0
 # define MAX_DIST 99999.0
 
 typedef struct s_data
@@ -95,7 +95,6 @@ t_vec3	rgb_to_Yxy(t_vec3 color);
 t_vec3	Yxy_to_rgb(t_vec3 color);
 t_vec3	rgb_to_xyz(t_vec3 color);
 t_vec3	xyz_to_rgb(t_vec3 color);
-t_vec3	sphdiffuse(t_vec3 ro, t_vec3 rd, t_vec2 t, int i);
-t_vec3	sphspecular(t_vec3 ro, t_vec3 rd, t_vec2 t, int i);
+double	sphdiffuse(t_vec3 ro, t_vec3 rd, double t, int i);
 
 #endif
