@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 22:54:45 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/16 19:39:03 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/16 20:16:12 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ double	sphdiffuse(t_vec3 ro, t_vec3 rd, double t, int j)
 	double	i;
 
 	i = g_scene.alight.power;
-	p = vec3_add(ro, vec3_mulS(rd, t));
+	p = vec3_add(ro, vec3_mulS(rd, t - 0.001));
 	n = vec3_sub(p, g_scene.sphere[j].center);
 	n = vec3_div(n, vec3_lenght(n));
 	lightDir = vec3_sub(g_scene.light.ro, p);
@@ -65,7 +65,12 @@ double	sphdiffuse(t_vec3 ro, t_vec3 rd, double t, int j)
 		(vec3_lenght(n) * vec3_lenght(lightDir));
 	r = vec3_sub(vec3_mulS(vec3_mulS(n, 2), vec3_dot(n, lightDir)), lightDir);
 	rd = vec3_mulS(rd, -1);
-	i += (g_scene.light.power * powf(max(vec3_dot(r, rd) / \
-		(vec3_lenght(r) * vec3_lenght(rd)), 0.0), SPEC_STRNG));
+	if (vec3_dot(n, lightDir) > 0)
+	{
+		if (shadow(p, lightDir) == 1)
+			i *= 0.3;
+	}
+	// i += (g_scene.light.power * powf(max(vec3_dot(r, rd) / \
+	// 	(vec3_lenght(r) * vec3_lenght(rd)), 0.0), SPEC_STRNG));
 	return (min(i, 1.0));
 }

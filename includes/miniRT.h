@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 23:04:54 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/16 19:15:31 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/16 20:10:09 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ t_vec3	Yxy_to_rgb(t_vec3 color);
 t_vec3	rgb_to_xyz(t_vec3 color);
 t_vec3	xyz_to_rgb(t_vec3 color);
 double	sphdiffuse(t_vec3 ro, t_vec3 rd, double t, int i);
+int		shadow(t_vec3 ro, t_vec3 rd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/05 10:45:06 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/16 18:33:45 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/16 21:19:29 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,23 @@ t_vec3	get_ray(double u, double v);
 
 void	init_sphere(t_sphere *sphere)
 {
-	sphere->center = new_vec3(3.0, 0.0, -2.5);	// pars
+	sphere->center = new_vec3(-2.0, 0.0, -5.5);	// pars
 	sphere->ra = 1;						// pars
 	sphere->color = rgb_to_xyz(new_vec3(250, 125, 125));		// pars
 }
 
 void	init_sphere1(t_sphere *sphere)
 {
-	sphere->center = new_vec3(-3.0, 0.0, -1.5);	// pars
-	sphere->ra = 1;						// pars
+	sphere->center = new_vec3(-3.0, 0.0, -25.5);	// pars
+	sphere->ra = 10;						// pars
 	sphere->color = rgb_to_xyz(new_vec3(125, 125, 250));		// pars
 }
 
 void	init_pl(t_plane	*pl)
 {
-	pl->ro = new_vec3(0, 0, -4);
-	pl->rd = new_vec3(0, 0, -1);
-	pl->color = new_vec3(0, 255, 0);
+	pl->ro = new_vec3(0, 2, -1);
+	pl->n = new_vec3(0.8, 0.1, -0.1);
+	pl->color = rgb_to_xyz(new_vec3(0, 255, 0));
 }
 
 	// start mlx
@@ -90,7 +90,7 @@ t_vec3	get_ray(double u, double v)
 	// init lights
 void	init_light(t_light *light, t_alight *alight)
 {
-	light->ro = new_vec3(0.0, 0.0, 2.5);		// pars
+	light->ro = new_vec3(-4.0, 0.0, -0.5);		// pars
 	light->power = 1;							// pars
 	light->color = vec3_mulS(new_vec3(255, 255, 255), light->power);		// pars
 	alight->power = 0.3;						// pars
@@ -124,7 +124,7 @@ void	pars(void)
 	init_light(&g_scene.light, &g_scene.alight);
 	init_sphere(&g_scene.sphere[0]);
 	init_sphere1(&g_scene.sphere[1]);
-	init_pl(&g_scene.plane);
+	//init_pl(&g_scene.plane);
 }
 
 int		main(void)
