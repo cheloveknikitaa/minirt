@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 15:43:29 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/16 21:08:01 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/17 16:55:29 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ typedef struct s_plane
 	t_vec3		color;
 }				t_plane;
 
-double	plaIntersect(t_vec3 ro, t_vec3 rd, t_plane pl);
-double	pladiffuse(t_vec3 ro, t_vec3 rd, double t, int j);
+double	plaIntersect(t_vec3 ro, t_vec3 rd, t_plane *pl);
 
 #endif
