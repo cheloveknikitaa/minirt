@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/05 10:45:06 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/17 17:57:21 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/18 18:10:38 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	init_sphere1(t_sphere *sphere)
 
 void	init_pl(t_plane	*pl)
 {
-	pl->ro = new_vec3(10, 10, -1);
-	pl->n = new_vec3(0.3, 0.5, 0.2);
+	pl->ro = new_vec3(0, 1, 0);
+	pl->n = new_vec3(-1, 0, 0);
 	pl->color = rgb_to_xyz(new_vec3(0, 255, 0));
 }
 
