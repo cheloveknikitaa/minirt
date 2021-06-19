@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/05 10:45:06 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/18 18:10:38 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/19 16:04:18 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	init_cam(t_cam *cam, double aspect, t_vec3 vup)
 	double	half_height;
 	double	half_width;
 
-	cam->ro = new_vec3(0.0, 0.0, 10.0);	// pars
+	cam->ro = new_vec3(-3.0, 0.0, 10.0);	// pars
 	cam->rd = new_vec3(0.0, 0.0, -1.0);	// pars
 	cam->FOV = 70;						// pars
 	half_height = tan(cam->FOV / 2);
@@ -90,7 +90,7 @@ t_vec3	get_ray(double u, double v)
 	// init lights
 void	init_light(t_light *light, t_alight *alight)
 {
-	light->ro = new_vec3(-9.0, 0.0, 3);		// pars
+	light->ro = new_vec3(-2.0, 0.0, 3);		// pars
 	light->power = 1;							// pars
 	light->color = vec3_mulS(new_vec3(255, 255, 255), light->power);		// pars
 	alight->power = 0.3;						// pars
