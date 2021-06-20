@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 22:55:03 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/19 17:46:39 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/19 18:25:28 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ double	plaIntersect(t_vec3 ro, t_vec3 rd, t_plane *pl)
 	double	a;
 
 	d = vec3_dot(rd, pl->n);
-	// printf("<<%f>>\n", d);
 	if (d < DBL_EPSILON && d > -DBL_EPSILON)
 		return (0);
 	a = vec3_dot(pl->ro, pl->n);
@@ -31,7 +30,6 @@ double	plaIntersect(t_vec3 ro, t_vec3 rd, t_plane *pl)
 	if (r < 0)
 		r = -r;
 	t = (r - a) / d;
-	// printf("<<t = %f>>\n", t);
 	return (t);
 
 	// double	d;
