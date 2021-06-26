@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 22:54:45 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/17 14:56:06 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/26 23:49:33 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,17 @@ double	sphdiffuse(t_vec3 ro, t_vec3 rd, double t, int j)
 	// i += (g_scene.light.power * powf(max(vec3_dot(r, rd) / \
 	// 	(vec3_lenght(r) * vec3_lenght(rd)), 0.0), SPEC_STRNG));
 	return (min(i, 1.0));
+}
+
+void	init_sphere(char **line, t_sphere *sphere)
+{
+	char	*linekeep;
+
+	linekeep = *line;
+	sphere->center = pars_vec3(line);
+	sphere->ra = ft_atof(line);
+	sphere->color = rgb_to_xyz(pars_vec3_color(line));
+	g_scene.sp += 1;
+	free (linekeep);
+	*line = NULL;
 }

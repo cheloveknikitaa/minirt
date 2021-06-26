@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/06 15:43:29 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/18 17:04:06 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/26 23:31:22 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ typedef struct s_plane
 
 double	plaIntersect(t_vec3 ro, t_vec3 rd, t_plane *pl);
 double	plaIntersect1(t_vec3 ro, t_vec3 rd, t_plane pl);
+void	init_pl(char **line, t_plane *pl);
 
 #endif

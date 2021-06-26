@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 00:25:00 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/17 15:56:20 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/26 23:31:55 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ typedef struct s_sphere
 }				t_sphere;
 
 t_vec2	sphIntersect(t_vec3 ro, t_vec3 rd, double ra, t_vec3 center);
+void	init_sphere(char **line, t_sphere *sphere);
 
 #endif

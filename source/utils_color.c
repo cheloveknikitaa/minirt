@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 21:12:10 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/19 17:36:51 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/27 00:00:46 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,20 @@ t_vec3	ray_color(t_vec3 ro, t_vec3 rd)
 			n = vec3_norm(vec3_sub(p, g_scene.sphere[i].center));
 			g_scene.mlx.color = g_scene.sphere[i].color;
 		}
-		t.x = plaIntersect(ro, rd, &g_scene.plane);
+		t.x = plaIntersect(ro, rd, &g_scene.plane[i]);
 		// printf("<<1<<%f>>\n", t.x);
 		if (t.x > 0.0 && t.x < mint)
 		{
 			mint = t.x;
 			p = vec3_add(ro, vec3_mulS(rd, mint - 0.001));
-			n = g_scene.plane.n;
-			g_scene.mlx.color = g_scene.plane.color;
-			break ;
+			n = g_scene.plane[i].n;
+			g_scene.mlx.color = g_scene.plane[i].color;
 		}
 		i++;
 	}
 	if (mint < DBL_MAX)
 		return (vec3_mulS(g_scene.mlx.color, diffuse(p, n, rd)));
-	return (new_vec3(1, 1, 1));
+	return (new_vec3(0, 0, 0));
 }
 
 int	shadow(t_vec3 ro, t_vec3 rd)
@@ -81,7 +80,7 @@ int	shadow(t_vec3 ro, t_vec3 rd)
 		{
 			mint = min(t.x, t.y);
 		}
-		t.x = plaIntersect(ro, rd, &g_scene.plane);
+		t.x = plaIntersect(ro, rd, &g_scene.plane[i]);
 		// printf("<<1<<%f>>\n", t.x);
 		if (t.x > 0.0 && t.x < mint)
 		{
@@ -117,4 +116,22 @@ double	diffuse(t_vec3 p, t_vec3 n, t_vec3 rd)
 	// i += (g_scene.light.power * powf(max(vec3_dot(r, rd) / \
 	// 	(vec3_lenght(r) * vec3_lenght(rd)), 0.0), SPEC_STRNG));
 	return (min(i, 1.0));
+}
+
+void	mix_color_light(t_light *light, t_alight *alight)
+{
+	light->color = vec3_add(light->color, alight->color);
+	if (light->color.x > 255.0)
+		light->color.x = 255.0;
+	if (light->color.x < 0)
+		light->color.x = 0.0;
+	if (light->color.y > 255.0)
+		light->color.y = 255.0;
+	if (light->color.y < 0)
+		light->color.y = 0.0;
+	if (light->color.z > 255.0)
+		light->color.z = 255.0;
+	if (light->color.z < 0)
+		light->color.z = 0.0;
+	alight->color = vec3_mulS(alight->color, 1 / 255);
 }

@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/05 10:38:14 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/08 18:11:50 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/26 21:36:06 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,8 @@ t_vec3	vec3_reflect(t_vec3 rd, t_vec3 n);
 t_vec3	new_vec3(double x, double y, double z);
 t_vec3	vec3_div(t_vec3 a, double c);
 t_vec3	vec3_cross(t_vec3 a, t_vec3 b);
+t_vec3	pars_vec3(char **line);
+t_vec3	pars_vec3_color(char **line);
+t_vec3	pars_vec3_norm(char **line);
 
 #endif

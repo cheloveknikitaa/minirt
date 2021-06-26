@@ -1,0 +1,11 @@
+.DS_Store
+.idea/.gitignore
+.idea/miniRT.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.vscode/configurationCache.log
+.vscode/dryrun.log
+.vscode/launch.json
+.vscode/targets.log
+null.d
