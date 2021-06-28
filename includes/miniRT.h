@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 23:04:54 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/26 23:58:05 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/28 22:42:19 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void	pars(int argc, char **argv);
 void	init_cam(char **line, t_cam *cam, double aspect, t_vec3 vup);
 void	init_light(char **line, t_light *light);
 void	init_alight(char **line, t_alight *alight);
+void	check_line(char *line);
 
 t_vec3	get_ray(int i, int j);
 void	write_color(t_data *scene, t_vec3 ray);

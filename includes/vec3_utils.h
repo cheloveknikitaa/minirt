@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/05 10:38:14 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/26 21:36:06 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/28 23:54:18 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ t_vec3	vec3_cross(t_vec3 a, t_vec3 b);
 t_vec3	pars_vec3(char **line);
 t_vec3	pars_vec3_color(char **line);
 t_vec3	pars_vec3_norm(char **line);
+void	check_pars_vec3(double x, double y, double z, int i);
 
 #endif

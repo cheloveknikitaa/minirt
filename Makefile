@@ -6,7 +6,7 @@
 #    By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/10 22:20:54 by caugusta          #+#    #+#              #
-#    Updated: 2021/06/26 23:49:02 by caugusta         ###   ########.fr        #
+#    Updated: 2021/06/28 20:19:12 by caugusta         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ sub_directory :
 	@mkdir -p $(OBJ_DIR)
 
 $(OBJ_DIR)%.o : $(SOURCE_DIR)%.c
-	$(CC) -c -MMD -g $(CFLAGS) -I includes $< -o $@
+	$(CC) -g -c -MMD -g $(CFLAGS) -I includes $< -o $@
 
 $(NAME) : $(MLX) $(LIBFT) $(OBJ) #$(SOURCE_DIR)neubivay.c 
 	@$(CC) $(CFLAGS) -lmlx -framework OpenGL -framework AppKit $^ -o $@

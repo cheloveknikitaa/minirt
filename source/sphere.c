@@ -82,6 +82,7 @@ void	init_sphere(char **line, t_sphere *sphere)
 	char	*linekeep;
 
 	linekeep = *line;
+	*line = *line + 2;
 	sphere->center = pars_vec3(line);
 	sphere->ra = ft_atof(line);
 	sphere->color = rgb_to_xyz(pars_vec3_color(line));

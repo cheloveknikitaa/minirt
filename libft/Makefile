@@ -6,7 +6,7 @@
 #    By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/23 18:32:18 by caugusta          #+#    #+#              #
-#    Updated: 2021/05/12 19:20:00 by caugusta         ###   ########.fr        #
+#    Updated: 2021/06/28 20:19:58 by caugusta         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ sub_directory :
 	@mkdir -p $(OBJ_DIR)
 
 $(OBJ_DIR)%.o : %.c $(HEADER)
-	$(CC) -c -MMD $(FLAGS) $< -o $@
+	$(CC) -g -c -MMD $(FLAGS) $< -o $@
 
 $(NAME) : $(OBJ)
 	ar rcs $(NAME) $?

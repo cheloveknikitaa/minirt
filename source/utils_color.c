@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 21:12:10 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/27 00:00:46 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/28 23:22:28 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_vec3	ray_color(t_vec3 ro, t_vec3 rd)
 
 	i = 0;
 	mint = DBL_MAX;
-	while (i < 2)
+	while (i < g_scene.sp || i < g_scene.pl || i < g_scene.cy)
 	{
 		t = sphIntersect(ro, rd, g_scene.sphere[i].ra,
 				g_scene.sphere[i].center);
@@ -48,7 +48,7 @@ t_vec3	ray_color(t_vec3 ro, t_vec3 rd)
 			n = vec3_norm(vec3_sub(p, g_scene.sphere[i].center));
 			g_scene.mlx.color = g_scene.sphere[i].color;
 		}
-		t.x = plaIntersect(ro, rd, &g_scene.plane[i]);
+		t.x = plaIntersect(ro, rd, g_scene.plane[i]);
 		// printf("<<1<<%f>>\n", t.x);
 		if (t.x > 0.0 && t.x < mint)
 		{
@@ -80,7 +80,7 @@ int	shadow(t_vec3 ro, t_vec3 rd)
 		{
 			mint = min(t.x, t.y);
 		}
-		t.x = plaIntersect(ro, rd, &g_scene.plane[i]);
+		t.x = plaIntersect(ro, rd, g_scene.plane[i]) - 0.001;
 		// printf("<<1<<%f>>\n", t.x);
 		if (t.x > 0.0 && t.x < mint)
 		{

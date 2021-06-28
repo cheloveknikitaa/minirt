@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 22:14:49 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/26 23:52:54 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/28 22:41:28 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ void	check_name(char *argv)
 		if (argv[i + 2] == 't')
 		{
 			if (argv[i + 3] == '\0')
+			{
+				init_scene();
 				return ;
+			}
 		}
 	}
 	exit_err(1);
@@ -64,4 +67,19 @@ void	exit_err(int code)
 	if (code == 6)
 		write(1, "invalid argument, too much argument\n", 37);
 	exit (1);
+}
+
+void	init_scene(void)
+{
+	g_scene.width = 1920;
+	g_scene.height = 1080;
+	g_scene.aspect_ratio = 16.0 / 9.0;
+	g_scene.vup = new_vec3(0.0, 1.0, 0.0);
+	init_mlx(&g_scene.mlx, g_scene.width, g_scene.height);
+	g_scene.alight.count = 0;
+	g_scene.light.count = 0;
+	g_scene.cam.count = 0;
+	g_scene.sp = 0;
+	g_scene.pl = 0;
+	g_scene.cy = 0;
 }
