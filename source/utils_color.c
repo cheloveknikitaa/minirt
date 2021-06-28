@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 21:12:10 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/28 23:22:28 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/29 00:13:45 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ t_vec3	ray_color(t_vec3 ro, t_vec3 rd)
 			g_scene.mlx.color = g_scene.sphere[i].color;
 		}
 		t.x = plaIntersect(ro, rd, g_scene.plane[i]);
-		// printf("<<1<<%f>>\n", t.x);
 		if (t.x > 0.0 && t.x < mint)
 		{
 			mint = t.x;
@@ -81,7 +80,6 @@ int	shadow(t_vec3 ro, t_vec3 rd)
 			mint = min(t.x, t.y);
 		}
 		t.x = plaIntersect(ro, rd, g_scene.plane[i]) - 0.001;
-		// printf("<<1<<%f>>\n", t.x);
 		if (t.x > 0.0 && t.x < mint)
 		{
 			mint = t.x;

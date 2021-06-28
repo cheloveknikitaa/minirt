@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 23:04:54 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/28 22:42:19 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/29 00:02:20 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,5 @@ t_vec3	rgb_to_xyz(t_vec3 color);
 double	diffuse(t_vec3 p, t_vec3 n, t_vec3 rd);
 int		shadow(t_vec3 ro, t_vec3 rd);
 void	mix_color_light(t_light *light, t_alight *alight);
-
 
 #endif
