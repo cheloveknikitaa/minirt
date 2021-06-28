@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 23:04:54 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/29 00:02:20 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/29 00:41:28 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "mlx_utils.h"
 # include "sphere_utils.h"
 # include "plane_utils.h"
+# include "cylinder_utils.h"
 
 # include <math.h>
 # include <stdio.h>

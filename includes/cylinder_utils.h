@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   plane_utils.h                                      :+:      :+:    :+:   */
+/*   cylinder_utils.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/06 15:43:29 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/29 00:39:17 by caugusta         ###   ########.fr       */
+/*   Created: 2021/06/29 00:39:49 by caugusta          #+#    #+#             */
+/*   Updated: 2021/06/29 00:45:30 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PLANE_UTILS_H
-# define PLANE_UTILS_H
+#ifndef CYLINDER_UTILS_H
+# define CYLINDER_UTILS_H
 # include "miniRT.h"
 
-typedef struct s_plane
+typedef struct s_cylinder
 {
-	t_vec3		ro;
+	t_vec3		coord;
 	t_vec3		n;
+	double		di;
+	double		height;
 	t_vec3		color;
-}				t_plane;
-
-double	plaIntersect(t_vec3 ro, t_vec3 rd, t_plane pl);
-void	init_pl(char **line, t_plane *pl);
+}				t_cylinder;
 
 #endif

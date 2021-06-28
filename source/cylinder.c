@@ -6,7 +6,13 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 22:55:43 by caugusta          #+#    #+#             */
-/*   Updated: 2021/05/10 22:55:44 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/29 00:52:53 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "miniRT.h"
+
+t_vec3	cyintersect(t_vec3 ro, t_vec3 rd, t_cylinder cy)
+{
+	
+}
