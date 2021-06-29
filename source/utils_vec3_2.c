@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 14:43:22 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/28 23:59:54 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/29 17:29:15 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ t_vec3	pars_vec3_norm(char **line)
 	}
 	else
 		exit_err(4);
-	check_pars_vec3(x, y, z, 2);
+	// check_pars_vec3(x, y, z, 2);
 	return (new_vec3(x, y, z));
 }
 
@@ -117,7 +117,7 @@ void	check_pars_vec3(double x, double y, double z, int i)
 	}
 	if (i == 2)
 	{
-		if (x + y + z > 1.0 || x + y + z < -1.0)
-			exit_err(4);
+		// if (x + y + z > 1.0 || x + y + z < -1.0)
+		// 	exit_err(4);
 	}
 }

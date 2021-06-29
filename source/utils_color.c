@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 21:12:10 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/29 00:13:45 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/06/29 21:13:21 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	shadow(t_vec3 ro, t_vec3 rd)
 
 	i = 0;
 	mint = DBL_MAX;
-	while (i < 2)
+	while (i < g_scene.sp || i < g_scene.pl || i < g_scene.cy)
 	{
 		t = sphIntersect(ro, rd, g_scene.sphere[i].ra,
 				g_scene.sphere[i].center);
@@ -104,7 +104,7 @@ double	diffuse(t_vec3 p, t_vec3 n, t_vec3 rd)
 		if (shadow(p, lightDir) == 1)
 		{
 			i *= 1.0001;
-			return (i);
+			return (min(i, 1.0));
 		}
 	}
 	i += (g_scene.light.power * max(vec3_dot(n, lightDir), 0.0)) / \
