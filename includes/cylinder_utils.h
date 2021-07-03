@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 00:39:49 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/29 19:38:43 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/07/03 21:46:28 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,17 @@ typedef struct s_cylinder
 	double		k0;
 	double		k1;
 	double		k2;
+	t_vec3		ba;
+	t_vec3		oc;
 }				t_cylinder;
 
 double	cyintersect(t_vec3 ro, t_vec3 rd, t_cylinder *cy);
 void	cykcalc(t_vec3 ba, t_vec3 oc, t_cylinder *cy, t_vec3 rd);
+void	init_cy(char **line, t_cylinder *cylinder);
+double	idiotizm(double y, t_vec3 ba);
+void	init_cy(char **line, t_cylinder *cylinder);
+double	new_normal_body(double t, t_cylinder *cy, t_vec3 rd, double y);
+double	new_normal_caps(double t, t_cylinder *cy, double y);
+double	cyintersect_shadow(t_vec3 ro, t_vec3 rd, t_cylinder *cy);
 
 #endif

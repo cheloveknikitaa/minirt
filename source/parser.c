@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 19:04:59 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/28 22:56:40 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/07/03 19:41:39 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,13 @@ void	check_line(char *line)
 		init_pl(&line, &g_scene.plane[g_scene.pl]);
 	else if (line[0] == 's' && line[1] == 'p')
 		init_sphere(&line, &g_scene.sphere[g_scene.sp]);
-//		else if (line[0] == 'c' && line[1] == 'y')
-		// init_cy(line);
+	else if (line[0] == 'c' && line[1] == 'y')
+		init_cy(&line, &g_scene.cylinder[g_scene.cy]);
 	else
 		free(line);
 }
+
+
+// проверить FOV
+// проверить нормали
+// проверить радиусы на наличие отрицательных значенийж

@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 23:04:54 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/29 20:35:07 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/07/03 19:32:30 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_scene
 	int			sp;
 	t_plane		plane[MAX_OBJ];
 	int			pl;
+	t_cylinder	cylinder[MAX_OBJ];
 	int			cy;
 }				t_scene;
 
