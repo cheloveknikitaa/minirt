@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 21:12:10 by caugusta          #+#    #+#             */
-/*   Updated: 2021/07/04 09:18:35 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/07/04 14:02:32 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_vec3	ray_color(t_vec3 ro, t_vec3 rd)
 			n = g_scene.plane[i].n;
 			g_scene.mlx.color = g_scene.plane[i].color;
 		}
-		t.x = cyintersect(ro, rd, &g_scene.cylinder[i]);
+		t = cyintersect(ro, rd, &g_scene.cylinder[i]);
 		if (t.x > 0.0 && t.x < mint)
 		{
 			mint = t.x;
@@ -92,7 +92,7 @@ int	shadow(t_vec3 ro, t_vec3 rd)
 		{
 			mint = t.x;
 		}
-		t.x = cyintersect(ro, rd, &g_scene.cylinder[i]);
+		t = cyintersect(ro, rd, &g_scene.cylinder[i]);
 		if (t.x > 0.0 && t.x < mint)
 		{
 			mint = t.x;

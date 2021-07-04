@@ -6,55 +6,60 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 22:55:43 by caugusta          #+#    #+#             */
-/*   Updated: 2021/07/04 11:02:06 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/07/04 14:05:48 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-double	cyintersect(t_vec3 ro, t_vec3 rd, t_cylinder *cy)
+t_vec2	cyintersect(t_vec3 ro, t_vec3 rd, t_cylinder *cy)
 {
-	double	t;
-	double	y;
-	double	ynew;
-	double	h;
+	double	a[5];
+	t_vec2	t;
 
-	cy->ba = vec3_sub(cy->pb, cy->pa);
-	cy->oc = vec3_sub(ro, cy->pa);
-	cykcalc(cy->ba, cy->oc, cy, rd);
-	h = cy->k1 * cy->k1 - cy->k2 * cy->k0;
-	if (h < 0.0)
-		return (-1.0);
-	h = sqrtf(h);
-	t = (-cy->k1 - h) / cy->k2;
-	cy->p = vec3_add(ro, vec3_mulS(rd, t));
-	y = vec3_dot(cy->ba, cy->oc) + t * vec3_dot(cy->ba, rd);
-	if (y > 0.0 && y < vec3_dot(cy->ba, cy->ba))
-		return (new_normal_body(t, cy, rd, y));
-	ynew = idiotizm(y, cy->ba);
-	t = (ynew - vec3_dot(cy->ba, cy->oc)) / vec3_dot(cy->ba, rd);
-	cy->p = vec3_add(ro, vec3_mulS(rd, t));
-	if (fabs(cy->k1 + cy->k2 * t) < h)
-		return (new_normal_caps(t, cy, y));
-	return (-1.0);
+	cy->oc = vec3_sub(ro, cy->c);
+	cy->ca = vec3_mulS(vec3_sub(cy->pb, cy->pa), 1 / cy->height);
+	a[0] = 1.0 - vec3_dot(cy->ca, rd);
+	a[1] = vec3_dot(cy->oc, rd) - vec3_dot(cy->ca, cy->oc) * \
+		vec3_dot(cy->ca, rd);
+	a[2] = vec3_dot(cy->oc, cy->oc) - vec3_dot(cy->ca, cy->oc) * \
+		vec3_dot(cy->ca, cy->oc) - cy->ra * cy->ra;
+	a[3] = a[1] * a[1] - a[0] * a[2];
+	if (a[3] < 0.0)
+		return (new_vec2(-1.0, -1.0));
+	a[3] = sqrtf(a[3]);
+	t.x = (-a[1] - a[3]) / a[0];
+	t.y = (-a[1] + a[3]) / a[0];
+	a[4] = vec3_dot(cy->ca, cy->oc) + t.x * vec3_dot(cy->ca, rd);
+	if (fabs(a[4]) < cy->half_h)
+		return (new_normal_body(t, cy, rd, a[4]));
+	return (new_normal_caps(t, cy, rd, a));
 }
 
-void	cykcalc(t_vec3 ba, t_vec3 oc, t_cylinder *cy, t_vec3 rd)
+t_vec2	new_normal_body(t_vec2 t, t_cylinder *cy, t_vec3 rd, double y)
 {
-	cy->k2 = vec3_dot(ba, ba) - vec3_dot(ba, rd) * vec3_dot(ba, rd);
-	cy->k1 = vec3_dot(ba, ba) * vec3_dot(oc, rd) - vec3_dot(ba, oc) * \
-		vec3_dot(ba, rd);
-	cy->k0 = vec3_dot(ba, ba) * vec3_dot(oc, oc) - vec3_dot(ba, oc) * \
-		vec3_dot(ba, oc) - cy->ra * cy->ra * vec3_dot(ba, ba);
+	cy->n = vec3_sub(vec3_add(cy->oc, vec3_mulS(rd, t.x)), \
+		vec3_mulS(cy->ca, y));
+	return (t);
 }
 
-double	idiotizm(double y, t_vec3 ba)
+t_vec2	new_normal_caps(t_vec2 t, t_cylinder *cy, t_vec3 rd, double a[5])
 {
-	if (y < 0.0)
-		y = 0.0;
-	else
-		y = vec3_dot(ba, ba);
-	return (y);
+	double	tp;
+
+	if (a[4] < 0)
+		a[4] = -1;
+	else if (a[4] > 0)
+		a[4] = 1;
+	else if (a[4] == 0)
+		a[4] = 0;
+	tp = (a[5] * cy->half_h - vec3_dot(cy->ca, cy->oc)) / vec3_dot(cy->ca, rd);
+	if (fabs(a[1] + a[0] * tp) < a[3])
+	{
+		cy->n = vec3_mulS(cy->ca, a[4]);
+		return (t);
+	}
+	return (new_vec2(-1.0, -1.0));
 }
 
 void	init_cy(char **line, t_cylinder *cylinder)
@@ -70,75 +75,9 @@ void	init_cy(char **line, t_cylinder *cylinder)
 	cylinder->color = rgb_to_xyz(pars_vec3_color(line));
 	cylinder->pb = vec3_add(vec3_mulS(cylinder->nv, cylinder->height), \
 		cylinder->pa);
-	cylinder->c = vec3_add(vec3_mulS(cylinder->nv, (cylinder->height / 2)), \
-		cylinder->pa);
+	cylinder->c = vec3_mulS(vec3_add(cylinder->pa, cylinder->pb), 0.5);
+	cylinder->half_h = cylinder->height / 2;
 	g_scene.cy += 1;
 	free (linekeep);
 	*line = NULL;
-}
-
-double	new_normal_body(double t, t_cylinder *cy, t_vec3 rd, double y)
-{
-	t_vec3	xbody;
-	double	interbody;
-	double	intercap;
-
-	xbody = vec3_mulS(cy->nv, vec3_dot(vec3_sub(cy->p, cy->c), cy->nv));
-	xbody = vec3_sub(vec3_sub(cy->p, cy->c), xbody);
-	interbody = vec3_lenght(xbody);
-	intercap = powf(vec3_dot(vec3_sub(cy->p, cy->c), cy->nv), 2.0);
-	if (interbody > cy->ra && intercap > powf(cy->height / 2.0, 2.0))
-		return (-1.0);
-	cy->n = vec3_mulS(vec3_sub(vec3_add(cy->oc, vec3_mulS(rd, t)), vec3_mulS(\
-				vec3_mulS(cy->ba, y), 1 / vec3_dot(cy->ba, cy->ba))), \
-					1 / cy->ra);
-	return (t);
-}
-
-double	new_normal_caps(double t, t_cylinder *cy, double y)
-{
-	t_vec3	xbody;
-	double	interbody;
-	double	intercap;
-
-	if (y < 0)
-		y = -1;
-	else if (y > 0)
-		y = 1;
-	else if (y == 0)
-		y = 0;
-	xbody = vec3_mulS(cy->nv, vec3_dot(vec3_sub(cy->p, cy->c), cy->nv));
-	xbody = vec3_sub(vec3_sub(cy->p, cy->c), xbody);
-	interbody = vec3_lenght(xbody);
-	intercap = powf(vec3_dot(vec3_sub(cy->p, cy->c), cy->nv), 2.0);
-	if (interbody > cy->ra && intercap > powf(cy->height / 2.0, 2.0))
-		return (-1.0);
-	cy->n = vec3_mulS(vec3_mulS(cy->ba, y), (1 / vec3_dot(cy->ba, cy->ba)));
-	return (t);
-}
-
-
-double	cyintersect_shadow(t_vec3 ro, t_vec3 rd, t_cylinder cy)
-{
-	double	t;
-	double	y;
-	double	ynew;
-	double	h;
-
-	cy.ba = vec3_sub(cy.pb, cy.pa);
-	cy.oc = vec3_sub(ro, cy.pa);
-	cykcalc(cy.ba, cy.oc, &cy, rd);
-	h = cy.k1 * cy.k1 - cy.k2 * cy.k0;
-	if (h < 0.0)
-		return (-1.0);
-	h = sqrtf(h);
-	t = (-cy.k1 - h) / cy.k2;
-	y = vec3_dot(cy.ba, cy.oc) + t * vec3_dot(cy.ba, rd);
-	if (y > 0.0 && y < vec3_dot(cy.ba, cy.ba))
-		return (t);
-	ynew = idiotizm(y, cy.ba);
-	t = (ynew - vec3_dot(cy.ba, cy.oc)) / vec3_dot(cy.ba, rd);
-	if (fabs(cy.k1 + cy.k2 * t) < h)
-		return (t);
-	return (-1.0);
 }
