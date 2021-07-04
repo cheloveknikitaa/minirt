@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 21:12:10 by caugusta          #+#    #+#             */
-/*   Updated: 2021/07/03 23:02:28 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/07/04 09:18:35 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	shadow(t_vec3 ro, t_vec3 rd)
 		{
 			mint = t.x;
 		}
-		t.x = cyintersect_shadow(ro, rd, &g_scene.cylinder[i]) - 0.001;
+		t.x = cyintersect(ro, rd, &g_scene.cylinder[i]);
 		if (t.x > 0.0 && t.x < mint)
 		{
 			mint = t.x;
@@ -116,7 +116,7 @@ double	diffuse(t_vec3 p, t_vec3 n, t_vec3 rd)
 	{
 		if (shadow(p, lightDir) == 1)
 		{
-			i *= 1.0001;
+			// i *= 1.0001;
 			return (min(i, 1.0));
 		}
 	}
