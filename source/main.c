@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/05 10:45:06 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/26 23:10:03 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/07/27 14:36:34 by nikita           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	init_mlx(t_data *mlx, int width, int height)
 {
 	mlx->mlx = mlx_init();
+	if (!mlx->mlx)
+		exit_err(0);
 	mlx->win = mlx_new_window(mlx->mlx, width, height, "miniRT");
 	mlx->img = mlx_new_image(mlx->mlx, width, height);
 	mlx->addr = (int *)mlx_get_data_addr(mlx->img, &mlx->bits_per_pixel,

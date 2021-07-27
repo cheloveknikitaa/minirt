@@ -6,7 +6,7 @@
 #    By: nikita <nikita@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/10 22:20:54 by caugusta          #+#    #+#              #
-#    Updated: 2021/07/27 14:13:39 by nikita           ###   ########.fr        #
+#    Updated: 2021/07/27 14:29:32 by nikita           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ D_FILES				= $(wildcard $(OBJ_DIR)*.d)
 
 .PHONY : all sub_directory clean fclean re bonus
 
-all : sub_directory $(NAME)
+all : sub_directory $(MLX) $(NAME)
 	@echo COMPLETE
 
 sub_directory :
