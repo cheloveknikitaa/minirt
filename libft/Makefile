@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/04/23 18:32:18 by caugusta          #+#    #+#              #
-#    Updated: 2021/06/28 20:19:58 by caugusta         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME		= libft.a
 
 SRC =		ft_atoi.c		ft_isalpha.c		ft_itoa.c\
@@ -22,28 +10,33 @@ SRC =		ft_atoi.c		ft_isalpha.c		ft_itoa.c\
 			ft_strlcpy.c	ft_strnstr.c		ft_isalnum.c\
 			ft_isprint.c	ft_memcmp.c			ft_putchar_fd.c\
 			ft_strchr.c		ft_strlen.c			ft_strrchr.c\
-			ft_substr.c		ft_strjoin.c		get_next_line.c\
-			ft_split.c		ft_strtrim.c\
+			ft_substr.c		ft_strjoin.c		ft_split.c\
+			ft_strtrim.c\
 			ft_lstnew.c		ft_lstadd_front.c	ft_lstsize.c\
 			ft_lstlast.c	ft_lstadd_back.c	ft_lstdelone.c\
 			ft_lstclear.c	ft_lstiter.c		ft_lstmap.c\
+			ft_printf/ft_printf.c		ft_printf/parsing.c			ft_printf/proc_char.c\
+			ft_printf/proc_hex.c		ft_printf/proc_int.c		ft_printf/proc_percent.c\
+			ft_printf/proc_pointer.c	ft_printf/proc_string.c		ft_printf/proc_uint.c\
+			ft_printf/ft_utils.c		ft_printf/print.c			gnl/get_next_line.c
 
 OBJ_DIR		= object/
 OBJ			= $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 D_FILES		= $(wildcard $(OBJ_DIR)*.d)
 
 CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -g -Wall -Wextra -Werror -I .
 
 .PHONY : 	all sub_directory clean fclean re bonus
 
 all : sub_directory $(NAME)
 
 sub_directory :
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)/ft_printf
+	@mkdir -p $(OBJ_DIR)/gnl
 
-$(OBJ_DIR)%.o : %.c $(HEADER)
-	$(CC) -g -c -MMD $(FLAGS) $< -o $@
+$(OBJ_DIR)%.o : %.c
+	$(CC) -c -MMD $(CFLAGS) $< -o $@
 
 $(NAME) : $(OBJ)
 	ar rcs $(NAME) $?

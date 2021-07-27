@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/20 13:49:34 by caugusta          #+#    #+#             */
-/*   Updated: 2021/04/23 14:27:48 by caugusta         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
 
 static size_t	counts(char const *s, char c)
@@ -32,26 +20,33 @@ static size_t	counts(char const *s, char c)
 static size_t	lengstr(char const **s, char c)
 {
 	size_t	count;
+	size_t	i;
 
 	count = 0;
-	while (**s != c && **s != '\0')
+	i = 0;
+	while (**s == c && **s != '\0')
+		(*s)++;
+	while (s[0][i] != c && s[0][i] != '\0')
 	{
 		count++;
-		(*s)++;
+		i++;
 	}
 	return (count);
 }
 
-static void	cs_2d_arr(char **s, size_t count)
+static void	*cs_2d_arr(char **s, size_t count)
 {
-	while (count >= 0)
+	while (count > 0)
 	{
 		free(s[count]);
 		s[count] = NULL;
 		count--;
 	}
+	free(s[count]);
+	s[count] = NULL;
 	free (s);
 	s = NULL;
+	return (NULL);
 }
 
 char	**ft_split(char const *s, char c)
@@ -72,11 +67,9 @@ char	**ft_split(char const *s, char c)
 		while (*s == c)
 			s++;
 		splits[count] = ft_substr(s, 0, lengstr(&s, c));
+		s = s + lengstr(&s, c);
 		if (splits[count] == NULL)
-		{
-			cs_2d_arr(splits, count - 1);
-			return (NULL);
-		}
+			return (cs_2d_arr(splits, count - 1));
 		count++;
 	}
 	splits[count] = NULL;
