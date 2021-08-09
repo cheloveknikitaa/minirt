@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_math.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
+/*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 01:21:31 by caugusta          #+#    #+#             */
-/*   Updated: 2021/07/31 21:54:01 by nikita           ###   ########.fr       */
+/*   Updated: 2021/08/09 20:02:39 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,22 +83,31 @@ double	ft_atof2(char **line, int i)
 	return (n);
 }
 
-t_vec3	rgb_to_xyz(t_vec3 color)
+t_vec2	solve_quadratic(double a, double b, double c)
 {
-	t_vec3	tmp;
+	double	d;
+	double	q;
+	t_vec2	t;
 
-	color = vec3_mulS(color, 1 / 255.0);
-	if (color.x > 0.04045)
-		color.x = pow(((color.x + 0.055) / 1.055), 2.4);
+	d = b * b - 4 * a * c;
+	if (d < 0.0)
+		return (new_vec2(-1.0, -1.0));
+	else if (d == 0.0)
+		return (new_vec2(-0.5 * b / a, -0.5 * b / a));
 	else
-		color.x /= 12.92;
-	if (color.y > 0.04045)
-		color.y = pow(((color.y + 0.055) / 1.055), 2.4);
-	else
-		color.y /= 12.92;
-	if (color.z > 0.04045)
-		color.z = pow(((color.z + 0.055) / 1.055), 2.4);
-	else
-		color.z /= 12.92;
-	return (color);
+	{
+		if (b > 0)
+			q = -0.5 * (b + sqrt(d));
+		else
+			q = -0.5 * (b - sqrt(d));
+		t.x = q / a;
+		t.y = c / q;
+	}
+	if (t.x > t.y)
+	{
+		q = t.y;
+		t.y = t.x;
+		t.x = q;
+	}
+	return (t);
 }

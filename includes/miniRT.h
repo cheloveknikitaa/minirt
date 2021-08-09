@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
+/*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 23:04:54 by caugusta          #+#    #+#             */
-/*   Updated: 2021/08/02 13:06:09 by nikita           ###   ########.fr       */
+/*   Updated: 2021/08/09 20:04:15 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	exit_err(int code);
 
 double	ft_atof(char **line);
 double	ft_atof2(char **line, int i);
+t_vec2	solve_quadratic(double a, double b, double c);
 
 void	init_scene(void);
 void	init_mlx(t_data *mlx, int width, int height);

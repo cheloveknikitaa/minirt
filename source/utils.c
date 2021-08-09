@@ -6,28 +6,30 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 21:02:14 by caugusta          #+#    #+#             */
-/*   Updated: 2021/07/05 09:45:30 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/09 19:48:39 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	cykcalc(t_vec3 ba, t_vec3 oc, t_cylinder *cy, t_vec3 rd)
+t_vec3	rgb_to_xyz(t_vec3 color)
 {
-	cy->k2 = vec3_dot(ba, ba) - vec3_dot(ba, rd) * vec3_dot(ba, rd);
-	cy->k1 = vec3_dot(ba, ba) * vec3_dot(oc, rd) - vec3_dot(ba, oc) * \
-		vec3_dot(ba, rd);
-	cy->k0 = vec3_dot(ba, ba) * vec3_dot(oc, oc) - vec3_dot(ba, oc) * \
-		vec3_dot(ba, oc) - cy->ra * cy->ra * vec3_dot(ba, ba);
-}
+	t_vec3	tmp;
 
-double	idiotizm(double y, t_vec3 ba)
-{
-	if (y < 0.0)
-		y = 0.0;
+	color = vec3_mulS(color, 1 / 255.0);
+	if (color.x > 0.04045)
+		color.x = pow(((color.x + 0.055) / 1.055), 2.4);
 	else
-		y = vec3_dot(ba, ba);
-	return (y);
+		color.x /= 12.92;
+	if (color.y > 0.04045)
+		color.y = pow(((color.y + 0.055) / 1.055), 2.4);
+	else
+		color.y /= 12.92;
+	if (color.z > 0.04045)
+		color.z = pow(((color.z + 0.055) / 1.055), 2.4);
+	else
+		color.z /= 12.92;
+	return (color);
 }
 
 t_vec3	get_ray(int i, int j)

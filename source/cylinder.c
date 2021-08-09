@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 22:55:43 by caugusta          #+#    #+#             */
-/*   Updated: 2021/08/09 17:31:44 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/09 21:13:31 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,61 +60,57 @@
 double	cyintersect(t_vec3 ro, t_vec3 rd, t_cylinder *cy)
 {
 	t_vec2	t;
-	double	y;
-	double	y1;
-	double	h;
-	double	ch;
+	t_vec2	y;
 	double	a;
 	double	b;
 	double	c;
-	t_vec3	ca;
-	t_vec3	x;
 
-	x = vec3_sub(ro, cy->pa);
-	ch = vec3_lenght(cy->ba);
-	ca = vec3_mulS(cy->ba, 1 / ch);
-	ch *= 0.5;
+	cy->x = vec3_sub(ro, cy->pa);
 	cy->oc = vec3_sub(ro, cy->c);
 	a = vec3_dot(rd, rd) - pow(vec3_dot(rd, cy->nv), 2.0);
-	b = (vec3_dot(rd, x) - vec3_dot(rd, cy->nv) * vec3_dot(x, cy->nv)) * 2;
-	c = vec3_dot(x, x) - pow(vec3_dot(x, cy->nv), 2.0) - pow(cy->ra, 2.0);
-	h = b * b - 4 * a * c;
-	if (h < 0.0)
-		return (-1.0);
-	h = sqrt(h);
-	t.x = (-b + h) / (2 * a);
-	t.y = (-b - h) / (2 * a);
-	y = vec3_dot(ca, cy->oc) + min(t.x, t.y) * vec3_dot(ca, rd);
-	y1 = vec3_dot(ca, cy->oc) + max(t.x, t.y) * vec3_dot(ca, rd);
+	b = (vec3_dot(rd, cy->x) - vec3_dot(rd, cy->nv) * \
+		vec3_dot(cy->x, cy->nv)) * 2;
+	c = vec3_dot(cy->x, cy->x) - pow(vec3_dot(cy->x, cy->nv), 2.0) - \
+		pow(cy->ra, 2.0);
+	t = solve_quadratic(a, b, c);
+	if (t.x < 0)
+	{
+		t.x = t.y;
+		if (t.x < 0)
+			return (-1.0);
+	}
+	y.x = vec3_dot(cy->ca, cy->oc) + t.x * vec3_dot(cy->ca, rd);
+	y.y = vec3_dot(cy->ca, cy->oc) + t.y * vec3_dot(cy->ca, rd);
 	if (ro.x != g_scene.cam.ro.x && ro.y != g_scene.cam.ro.y && \
 		ro.z != g_scene.cam.ro.z)
 	{
-		if (fabs(y1) < ch)
+		if (fabs(y.y) < cy->ch)
 		{
 			cy->mint = max(t.x, t.y);
 			return (cy->mint);
 		}
-		if (fabs(y) < ch)
+		if (fabs(y.x) < cy->ch)
 		{
 			cy->mint = min(t.x, t.y);
 			return (cy->mint);
 		}
 	}
-	if (fabs(min(y, y1)) < ch)
+	if (fabs(y.x) < cy->ch)
 	{
-		cy->mint = min(t.x, t.y);
+		cy->mint = t.x;
 		cy->p = vec3_add(ro, vec3_mulS(rd, cy->mint));
-		// cy->n = vec3_norm(vec3_sub(vec3_add(cy->oc, vec3_mulS(rd, cy->mint)), vec3_mulS(ca, y)));
-		
-		cy->n = vec3_norm(vec3_sub(vec3_sub(cy->p, cy->pa), vec3_mulS(cy->nv, vec3_dot(rd, cy->nv) * cy->mint + vec3_dot(x, cy->nv))));
+		// cy->n = vec3_norm(vec3_sub(vec3_add(cy->oc, vec3_mulS(rd, cy->mint)), vec3_mulS(cy->ca, y.x)));
+		cy->n = vec3_norm(vec3_sub(vec3_sub(cy->p, cy->pa), \
+		vec3_mulS(cy->nv, vec3_dot(rd, cy->nv) * cy->mint + vec3_dot(cy->x, cy->nv))));
 		return (cy->mint);
 	}
-	if (fabs(max(y, y1)) < ch)
+	if (fabs(y.y) < cy->ch)
 	{
-		cy->mint = max(t.x, t.y);
+		cy->mint = t.y;
 		cy->p = vec3_add(ro, vec3_mulS(rd, cy->mint));
-		// cy->n = vec3_norm(vec3_sub(vec3_add(cy->oc, vec3_mulS(rd, cy->mint)), vec3_mulS(ca, y)));
-		cy->n = vec3_norm(vec3_sub(vec3_sub(cy->p, cy->pa), vec3_mulS(cy->nv, vec3_dot(rd, cy->nv) * cy->mint + vec3_dot(x, cy->nv))));
+		// cy->n = vec3_norm(vec3_sub(vec3_add(cy->oc, vec3_mulS(rd, cy->mint)), vec3_mulS(cy->ca, y.y)));
+		cy->n = vec3_norm(vec3_sub(vec3_sub(cy->p, cy->pa), \
+		vec3_mulS(cy->nv, vec3_dot(rd, cy->nv) * cy->mint + vec3_dot(cy->x, cy->nv))));
 		return (cy->mint);
 	}
 	return (-1.0);
@@ -140,6 +136,8 @@ void	init_cy(char **line, t_cylinder *cylinder)
 	cylinder->c = vec3_add(vec3_mulS(cylinder->nv, (cylinder->height / 2)), \
 		cylinder->pa);
 	cylinder->ba = vec3_sub(cylinder->pb, cylinder->pa);
+	cylinder->ca = vec3_mulS(cylinder->ba, 1 / vec3_lenght(cylinder->ba));
+	cylinder->ch = vec3_lenght(cylinder->ba) * 0.5;
 	g_scene.cy += 1;
 	free (linekeep);
 	*line = NULL;
