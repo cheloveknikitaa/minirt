@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 22:14:49 by caugusta          #+#    #+#             */
-/*   Updated: 2021/07/05 11:07:06 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/09 21:35:08 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,17 @@ void	exit_err(int code)
 {
 	write(1, "Error\n", 7);
 	if (code == 1)
-		write(1, "invalid file\n", 14);
+		write(2, "invalid file\n", 14);
 	if (code == 2)
-		write(1, "invalid color\n", 15);
+		write(2, "invalid color\n", 15);
 	if (code == 3)
-		write(1, "invalid argument\n", 18);
+		write(2, "invalid argument\n", 18);
 	if (code == 4)
-		write(1, "invalid argument, normal\n", 26);
+		write(2, "invalid argument, normal\n", 26);
 	if (code == 5)
-		write(1, "invalid argument, coordinates\n", 31);
+		write(2, "invalid argument, coordinates\n", 31);
 	if (code == 6)
-		write(1, "invalid argument, too much argument\n", 37);
+		write(2, "invalid argument, too much argument\n", 37);
 	exit (1);
 }
 

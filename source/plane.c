@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
+/*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 22:55:03 by caugusta          #+#    #+#             */
-/*   Updated: 2021/08/02 14:43:09 by nikita           ###   ########.fr       */
+/*   Updated: 2021/08/09 22:12:01 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	pl_new_normal(t_plane *pl, double t, t_vec3 ro, t_vec3 rd)
 {
 	pl->mint = t;
 	pl->p = vec3_add(ro, vec3_mulS(rd, pl->mint - 0.001));
+	if (vec3_dot(pl->n, ro) < 0)
+		pl->n = vec3_mulS(pl->n, -1);
 }
 
 t_vec3	plcolor(double *mint, t_vec3 *p, t_vec3 *n, t_plane pl)

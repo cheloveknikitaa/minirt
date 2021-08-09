@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 21:12:10 by caugusta          #+#    #+#             */
-/*   Updated: 2021/08/09 20:42:21 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/09 22:22:33 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ double	diffuse(t_vec3 p, t_vec3 n, t_vec3 rd)
 
 	i = g_scene.alight.power;
 	lightDir = vec3_sub(g_scene.light.ro, p);
-	if (vec3_dot(n, g_scene.cam.ro) < 0)
-		n = vec3_mulS(n, -1);
 	if (vec3_dot(n, lightDir) > 0)
 	{
 		if (shadow(p, lightDir) == 1)

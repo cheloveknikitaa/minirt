@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
+/*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 19:04:59 by caugusta          #+#    #+#             */
-/*   Updated: 2021/08/02 13:21:56 by nikita           ###   ########.fr       */
+/*   Updated: 2021/08/09 21:30:29 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	pars(int argc, char **argv)
 	char	*line;
 
 	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+		exit_err(1);
 	n = 1;
 	while (n > 0)
 	{
