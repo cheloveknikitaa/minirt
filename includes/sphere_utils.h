@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere_utils.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 00:25:00 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/26 23:31:55 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/07/31 14:46:58 by nikita           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,15 @@ typedef struct s_sphere
 {
 	t_vec3			center;
 	double			ra;
+	double			mint;
 	t_vec3			color;
+	t_vec3			n;
+	t_vec3			p;
 }				t_sphere;
 
-t_vec2	sphIntersect(t_vec3 ro, t_vec3 rd, double ra, t_vec3 center);
+double	sphIntersect(t_vec3 ro, t_vec3 rd, t_sphere *sp);
 void	init_sphere(char **line, t_sphere *sphere);
+double	sp_new_normal(t_sphere *sp, t_vec2 t, t_vec3 ro, t_vec3 rd);
+t_vec3	spcolor(double *mint, t_vec3 *p, t_vec3 *n, t_sphere sp);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 19:04:59 by caugusta          #+#    #+#             */
-/*   Updated: 2021/07/03 19:41:39 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/02 13:21:56 by nikita           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	init_cam(char **line, t_cam *cam, double aspect, t_vec3 vup)
 	cam->ro = pars_vec3(line);
 	cam->rd = pars_vec3_norm(line);
 	cam->FOV = ft_atof(line);
+	check_fov(cam->FOV);
 	half_height = tan(cam->FOV / 2);
 	half_width = aspect * half_height;
 	cam->w = vec3_norm(vec3_sub(cam->ro, cam->rd));
@@ -107,11 +108,8 @@ void	check_line(char *line)
 		init_sphere(&line, &g_scene.sphere[g_scene.sp]);
 	else if (line[0] == 'c' && line[1] == 'y')
 		init_cy(&line, &g_scene.cylinder[g_scene.cy]);
-	else
+	else if (line[0] == '#' || line[0] == '\0')
 		free(line);
+	else
+		exit_err(1);
 }
-
-
-// проверить FOV
-// проверить нормали
-// проверить радиусы на наличие отрицательных значенийж

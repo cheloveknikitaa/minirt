@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nikita <nikita@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 23:04:54 by caugusta          #+#    #+#             */
-/*   Updated: 2021/07/03 19:32:30 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/02 13:06:09 by nikita           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	init_cam(char **line, t_cam *cam, double aspect, t_vec3 vup);
 void	init_light(char **line, t_light *light);
 void	init_alight(char **line, t_alight *alight);
 void	check_line(char *line);
+void	check_fov(double fov);
 
 t_vec3	get_ray(int i, int j);
 void	write_color(t_data *scene, t_vec3 ray);

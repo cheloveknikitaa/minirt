@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 22:14:49 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/28 22:41:28 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/07/05 11:07:06 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,10 @@ void	init_scene(void)
 	g_scene.sp = 0;
 	g_scene.pl = 0;
 	g_scene.cy = 0;
+}
+
+void	check_fov(double fov)
+{
+	if (fov < 0 || fov > 180)
+		exit_err(3);
 }

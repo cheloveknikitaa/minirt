@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 21:12:10 by caugusta          #+#    #+#             */
-/*   Updated: 2021/07/04 14:02:32 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/09 18:28:20 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,15 @@ t_vec3	ray_color(t_vec3 ro, t_vec3 rd)
 	mint = DBL_MAX;
 	while (i < g_scene.sp || i < g_scene.pl || i < g_scene.cy)
 	{
-		t = sphIntersect(ro, rd, g_scene.sphere[i].ra,
-				g_scene.sphere[i].center);
-		if ((t.x > 0.0 && t.x < mint) || (t.y > 0.0 && t.y < mint))
-		{
-			mint = min(t.x, t.y);
-			p = vec3_add(ro, vec3_mulS(rd, mint - 0.001));
-			n = vec3_norm(vec3_sub(p, g_scene.sphere[i].center));
-			g_scene.mlx.color = g_scene.sphere[i].color;
-		}
-		t.x = plaIntersect(ro, rd, g_scene.plane[i]);
+		t.x = sphIntersect(ro, rd, &g_scene.sphere[i]);
 		if (t.x > 0.0 && t.x < mint)
-		{
-			mint = t.x;
-			p = vec3_add(ro, vec3_mulS(rd, mint - 0.001));
-			n = g_scene.plane[i].n;
-			g_scene.mlx.color = g_scene.plane[i].color;
-		}
-		t = cyintersect(ro, rd, &g_scene.cylinder[i]);
+			g_scene.mlx.color = spcolor(&mint, &p, &n, g_scene.sphere[i]);
+		t.x = plaIntersect(ro, rd, &g_scene.plane[i]);
 		if (t.x > 0.0 && t.x < mint)
-		{
-			mint = t.x;
-			p = vec3_add(ro, vec3_mulS(rd, mint - 0.001));
-			n = g_scene.cylinder[i].n;
-			g_scene.mlx.color = g_scene.cylinder[i].color;
-		}
+			g_scene.mlx.color = plcolor(&mint, &p, &n, g_scene.plane[i]);
+		t.x = cyintersect(ro, rd, &g_scene.cylinder[i]);
+		if (t.x > 0.0 && t.x < mint)
+			g_scene.mlx.color = cycolor(&mint, &p, &n, g_scene.cylinder[i]);
 		i++;
 	}
 	if (mint < DBL_MAX)
@@ -78,28 +62,21 @@ int	shadow(t_vec3 ro, t_vec3 rd)
 	int		i;
 
 	i = 0;
-	mint = DBL_MAX;
+	mint = 1.0;
 	while (i < g_scene.sp || i < g_scene.pl || i < g_scene.cy)
 	{
-		t = sphIntersect(ro, rd, g_scene.sphere[i].ra,
-				g_scene.sphere[i].center);
-		if ((t.x > 0.0 && t.x < mint) || (t.y > 0.0 && t.y < mint))
-		{
-			mint = min(t.x, t.y);
-		}
-		t.x = plaIntersect(ro, rd, g_scene.plane[i]) - 0.001;
-		if (t.x > 0.0 && t.x < mint)
-		{
+		t.x = sphIntersect(ro, rd, &g_scene.sphere[i]);
+		if (t.x > 0.001 && t.x < mint)
 			mint = t.x;
-		}
-		t = cyintersect(ro, rd, &g_scene.cylinder[i]);
-		if (t.x > 0.0 && t.x < mint)
-		{
+		t.x = plaIntersect(ro, rd, &g_scene.plane[i]);
+		if (t.x > 0.001 && t.x < mint)
 			mint = t.x;
-		}
+		t.x = cyintersect(ro, rd, &g_scene.cylinder[i]);
+		if (t.x > 0.001 && t.x < mint)
+			mint = t.x;
 		i++;
 	}
-	if (mint < DBL_MAX)
+	if (mint < 1.0)
 		return (1);
 	return (0);
 }
@@ -112,20 +89,19 @@ double	diffuse(t_vec3 p, t_vec3 n, t_vec3 rd)
 
 	i = g_scene.alight.power;
 	lightDir = vec3_sub(g_scene.light.ro, p);
+	if (vec3_dot(n, g_scene.cam.ro) < 0)
+		n = vec3_mulS(n, -1);
 	if (vec3_dot(n, lightDir) > 0)
 	{
 		if (shadow(p, lightDir) == 1)
-		{
-			// i *= 1.0001;
 			return (min(i, 1.0));
-		}
 	}
 	i += (g_scene.light.power * max(vec3_dot(n, lightDir), 0.0)) / \
 		(vec3_lenght(n) * vec3_lenght(lightDir));
-	// r = vec3_sub(vec3_mulS(vec3_mulS(n, 2), vec3_dot(n, lightDir)), lightDir);
-	// rd = vec3_mulS(rd, -1);
-	// i += (g_scene.light.power * powf(max(vec3_dot(r, rd) / \
-	// 	(vec3_lenght(r) * vec3_lenght(rd)), 0.0), SPEC_STRNG));
+	r = vec3_sub(vec3_mulS(vec3_mulS(n, 2), vec3_dot(n, lightDir)), lightDir);
+	rd = vec3_mulS(rd, -1);
+	i += (g_scene.light.power * pow(max(vec3_dot(r, rd) / \
+		(vec3_lenght(r) * vec3_lenght(rd)), 0.0), SPEC_STRNG));
 	return (min(i, 1.0));
 }
 
