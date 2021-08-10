@@ -6,13 +6,13 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 22:54:45 by caugusta          #+#    #+#             */
-/*   Updated: 2021/08/09 22:37:37 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/10 12:58:59 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-double	sphIntersect(t_vec3 ro, t_vec3 rd, t_sphere	*sp)
+double	sphIntersect(t_vec3 ro, t_vec3 rd, t_sphere *sp)
 {
 	double	a;
 	double	b;

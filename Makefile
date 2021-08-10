@@ -6,7 +6,7 @@
 #    By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/10 22:20:54 by caugusta          #+#    #+#              #
-#    Updated: 2021/07/05 11:02:09 by caugusta         ###   ########.fr        #
+#    Updated: 2021/08/10 13:01:13 by caugusta         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ CFLAGS				= #-Wall -Wextra -Werror
 OBJ_DIR				= object/
 SOURCE_DIR			= source/
 SOURCE				= sphere.c	utils_hook.c	utils_vec2.c	utils_vec3.c	utils_vec3_2.c	utils.c	utils_protect.c parser.c\
-						main.c	utils_color.c	utils_math.c	utils_vec2_1.c	utils_vec3_1.c	plane.c	cylinder.c
+						main.c	utils_color.c	utils_math.c	utils_vec2_1.c	utils_vec3_1.c	plane.c	cylinder.c	cone.c
 
 LIBFT				= libft/$(LIBFT_NAME)
 LIBFT_DIR			= libft/

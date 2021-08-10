@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 23:04:54 by caugusta          #+#    #+#             */
-/*   Updated: 2021/08/09 20:04:15 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/10 12:55:24 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "sphere_utils.h"
 # include "plane_utils.h"
 # include "cylinder_utils.h"
+# include "cone_utils.h"
 
 # include <math.h>
 # include <stdio.h>
@@ -91,6 +92,8 @@ typedef struct s_scene
 	int			pl;
 	t_cylinder	cylinder[MAX_OBJ];
 	int			cy;
+	t_cone		cone[MAX_OBJ];
+	int			co;
 }				t_scene;
 
 t_scene		g_scene;
