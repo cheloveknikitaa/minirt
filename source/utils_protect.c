@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 22:14:49 by caugusta          #+#    #+#             */
-/*   Updated: 2021/08/10 20:22:21 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/10 20:46:16 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	check_name(char *argv)
 {
 	int	i;
 
-	i = -1;
-	while (argv[++i] != '\0')
+	i = 0;
+	while (argv[i] != '\0')
 	{
 		if (argv[i] == '.')
 			break ;

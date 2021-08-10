@@ -6,7 +6,7 @@
 #    By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/10 22:20:54 by caugusta          #+#    #+#              #
-#    Updated: 2021/08/10 18:42:26 by caugusta         ###   ########.fr        #
+#    Updated: 2021/08/10 20:41:56 by caugusta         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ $(LIBFT) :
 	@echo LIBFT OK
 $(MLX) :
 	@$(MAKE) -C $(MLX_DIR) --silent
+	@cp $(MLX_DIR)/mlx.h ./includes
 	@echo MLX OK
 
 include $(D_FILES)
@@ -70,5 +71,6 @@ fclean : clean
 	@rm -f $(MLX_NAME) --silent
 	@rm -rf $(NAME)
 	@rm -rf includes/libft.h
+	@rm -rf includes/mlx.h
 
 re : fclean all
