@@ -16,6 +16,8 @@ typedef struct s_cone
 }				t_cone;
 
 double	cointersect(t_vec3 ro, t_vec3 rd, t_cone *cone);
+double	cone_solve(t_vec3 ro, t_vec3 rd, t_vec2 t, t_cone *cone);
+double	cone_normal(t_vec3 cp, t_vec3 rd, t_cone *cone);
 void	init_cone(char **line, t_cone *cone);
 t_vec3	cocolor(double *mint, t_vec3 *p, t_vec3 *n, t_cone co);
 

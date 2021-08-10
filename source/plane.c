@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 22:55:03 by caugusta          #+#    #+#             */
-/*   Updated: 2021/08/09 22:12:01 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/10 17:28:16 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	init_pl(char **line, t_plane *pl)
 void	pl_new_normal(t_plane *pl, double t, t_vec3 ro, t_vec3 rd)
 {
 	pl->mint = t;
-	pl->p = vec3_add(ro, vec3_mulS(rd, pl->mint - 0.001));
+	pl->p = vec3_add(ro, vec3_mulS(rd, pl->mint - 0.00001));
 	if (vec3_dot(pl->n, ro) < 0)
 		pl->n = vec3_mulS(pl->n, -1);
 }

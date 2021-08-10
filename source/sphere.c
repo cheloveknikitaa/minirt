@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 22:54:45 by caugusta          #+#    #+#             */
-/*   Updated: 2021/08/10 12:58:59 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/10 17:26:42 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ double	sphIntersect(t_vec3 ro, t_vec3 rd, t_sphere *sp)
 		if (t.x < 0)
 			return (-1.0);
 	}
-	sp->mint = min(t.x, t.y) - 0.001;
+	sp->mint = min(t.x, t.y) - 0.00001;
 	sp->p = vec3_add(ro, vec3_mulS(rd, sp->mint));
 	sp->n = vec3_norm(vec3_sub(sp->p, sp->center));
 	if (t.x == t.y)

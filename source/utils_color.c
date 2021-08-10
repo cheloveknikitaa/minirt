@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 21:12:10 by caugusta          #+#    #+#             */
-/*   Updated: 2021/08/10 13:00:52 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/10 17:44:10 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,29 +27,27 @@ void	write_color(t_data *scene, t_vec3 ray)
 	scene->int_color = scene->color.x + scene->color.y + scene->color.z;
 }
 
-t_vec3	ray_color(t_vec3 ro, t_vec3 rd)
+t_vec3	ray_color(t_vec3 ro, t_vec3 rd, int i)
 {
-	t_vec2	t;
+	double	t;
 	double	mint;
 	t_vec3	p;
 	t_vec3	n;
-	int		i;
 
-	i = 0;
 	mint = DBL_MAX;
-	while (i < g_scene.sp || i < g_scene.pl || i < g_scene.cy)
+	while (i < g_scene.sp || i < g_scene.pl || i < g_scene.cy || i < g_scene.co)
 	{
-		t.x = sphIntersect(ro, rd, &g_scene.sphere[i]);
-		if (t.x > 0.0 && t.x < mint)
+		t = sphIntersect(ro, rd, &g_scene.sphere[i]);
+		if (t > 0.0 && t < mint)
 			g_scene.mlx.color = spcolor(&mint, &p, &n, g_scene.sphere[i]);
-		t.x = plaIntersect(ro, rd, &g_scene.plane[i]);
-		if (t.x > 0.0 && t.x < mint)
+		t = plaIntersect(ro, rd, &g_scene.plane[i]);
+		if (t > 0.0 && t < mint)
 			g_scene.mlx.color = plcolor(&mint, &p, &n, g_scene.plane[i]);
-		t.x = cyintersect(ro, rd, &g_scene.cylinder[i]);
-		if (t.x > 0.0 && t.x < mint)
+		t = cyintersect(ro, rd, &g_scene.cylinder[i]);
+		if (t > 0.0 && t < mint)
 			g_scene.mlx.color = cycolor(&mint, &p, &n, g_scene.cylinder[i]);
-		t.x = cointersect(ro, rd, &g_scene.cone[i]);
-		if (t.x > 0.0 && t.x < mint)
+		t = cointersect(ro, rd, &g_scene.cone[i]);
+		if (t > 0.0 && t < mint)
 			g_scene.mlx.color = cocolor(&mint, &p, &n, g_scene.cone[i]);
 		i++;
 	}
@@ -60,26 +58,26 @@ t_vec3	ray_color(t_vec3 ro, t_vec3 rd)
 
 int	shadow(t_vec3 ro, t_vec3 rd)
 {
-	t_vec2	t;
+	double	t;
 	double	mint;
 	int		i;
 
 	i = 0;
 	mint = 1.0;
-	while (i < g_scene.sp || i < g_scene.pl || i < g_scene.cy)
+	while (i < g_scene.sp || i < g_scene.pl || i < g_scene.cy || i < g_scene.co)
 	{
-		t.x = sphIntersect(ro, rd, &g_scene.sphere[i]);
-		if (t.x > 0.001 && t.x < mint)
-			mint = t.x;
-		t.x = plaIntersect(ro, rd, &g_scene.plane[i]);
-		if (t.x > 0.001 && t.x < mint)
-			mint = t.x;
-		t.x = cyintersect(ro, rd, &g_scene.cylinder[i]);
-		if (t.x > 0.001 && t.x < mint)
-			mint = t.x;
-		t.x = cointersect(ro, rd, &g_scene.cone[i]);
-		if (t.x > 0.001 && t.x < mint)
-			mint = t.x;
+		t = sphIntersect(ro, rd, &g_scene.sphere[i]);
+		if (t > DBL_EPSILON && t < mint)
+			mint = t;
+		t = plaIntersect(ro, rd, &g_scene.plane[i]);
+		if (t > DBL_EPSILON && t < mint)
+			mint = t;
+		t = cyintersect(ro, rd, &g_scene.cylinder[i]);
+		if (t > DBL_EPSILON && t < mint)
+			mint = t;
+		t = cointersect(ro, rd, &g_scene.cone[i]);
+		if (t > DBL_EPSILON && t < mint)
+			mint = t;
 		i++;
 	}
 	if (mint < 1.0)

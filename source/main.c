@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/05 10:45:06 by caugusta          #+#    #+#             */
-/*   Updated: 2021/06/26 23:10:03 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/10 17:43:47 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char **argv)
 		while (i < g_scene.width)
 		{
 			write_color(&g_scene.mlx, ray_color(g_scene.cam.ro,
-					get_ray(i, j)));
+					get_ray(i, j), 0));
 			mlx_pixel_put(g_scene.mlx.mlx, g_scene.mlx.win, i,
 				j, g_scene.mlx.int_color);
 			i++;

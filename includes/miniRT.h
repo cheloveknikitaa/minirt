@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 23:04:54 by caugusta          #+#    #+#             */
-/*   Updated: 2021/08/10 12:55:24 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/10 17:44:40 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	check_fov(double fov);
 
 t_vec3	get_ray(int i, int j);
 void	write_color(t_data *scene, t_vec3 ray);
-t_vec3	ray_color(t_vec3 ro, t_vec3 rd);
+t_vec3	ray_color(t_vec3 ro, t_vec3 rd, int i);
 t_vec3	rgb_to_xyz(t_vec3 color);
 double	diffuse(t_vec3 p, t_vec3 n, t_vec3 rd);
 int		shadow(t_vec3 ro, t_vec3 rd);

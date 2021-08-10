@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/10 22:55:43 by caugusta          #+#    #+#             */
-/*   Updated: 2021/08/10 12:58:48 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/10 17:27:59 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,14 @@ double	new_normal_body(t_vec2 t, t_cylinder *cy, t_vec3 ro, t_vec3 rd)
 	y.y = vec3_dot(cy->ca, cy->oc) + t.y * vec3_dot(cy->ca, rd);
 	if (fabs(y.x) < cy->ch)
 	{
-		cy->mint = t.x - 0.001;
+		cy->mint = t.x - 0.00001;
 		cy->p = vec3_add(ro, vec3_mulS(rd, cy->mint));
 		cy->n = vec3_norm(vec3_sub(vec3_add(cy->oc, vec3_mulS(rd, cy->mint)), \
 		vec3_mulS(cy->ca, y.x)));
 	}
 	else if (fabs(y.y) < cy->ch)
 	{
-		cy->mint = t.y - 0.001;
+		cy->mint = t.y - 0.00001;
 		cy->p = vec3_add(ro, vec3_mulS(rd, cy->mint));
 		cy->n = vec3_norm(vec3_sub(vec3_add(cy->oc, vec3_mulS(rd, cy->mint)), \
 		vec3_mulS(cy->ca, y.y)));
