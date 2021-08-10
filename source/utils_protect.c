@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 22:14:49 by caugusta          #+#    #+#             */
-/*   Updated: 2021/08/10 12:56:18 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/10 20:22:21 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	exit_err(int code)
 	if (code == 5)
 		write(2, "invalid argument, coordinates\n", 31);
 	if (code == 6)
-		write(2, "invalid argument, too much argument\n", 37);
+		write(2, "invalid argument, incorrect amount of arguments\n", 49);
 	exit (1);
 }
 

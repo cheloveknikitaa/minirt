@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 19:04:59 by caugusta          #+#    #+#             */
-/*   Updated: 2021/08/10 18:49:49 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/10 20:24:31 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	init_cam(char **line, t_cam *cam, double aspect, t_vec3 vup)
 	cam->rd = pars_vec3_norm(line);
 	cam->FOV = ft_atof(line);
 	check_fov(cam->FOV);
-	half_height = tan(cam->FOV / 2);
+	half_height = tan((cam->FOV * M_PI / 180) / 2);
 	half_width = aspect * half_height;
 	cam->w = vec3_norm(vec3_sub(cam->ro, cam->rd));
 	cam->u = vec3_norm(vec3_cross(vup, cam->w));
