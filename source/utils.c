@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 21:02:14 by caugusta          #+#    #+#             */
-/*   Updated: 2021/08/09 19:48:39 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/10 18:48:28 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 t_vec3	rgb_to_xyz(t_vec3 color)
 {
-	t_vec3	tmp;
-
 	color = vec3_mulS(color, 1 / 255.0);
 	if (color.x > 0.04045)
 		color.x = pow(((color.x + 0.055) / 1.055), 2.4);

@@ -6,7 +6,7 @@
 #    By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/10 22:20:54 by caugusta          #+#    #+#              #
-#    Updated: 2021/08/10 13:01:13 by caugusta         ###   ########.fr        #
+#    Updated: 2021/08/10 18:42:26 by caugusta         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ LIBFT_NAME			= libft.a
 MLX_NAME			= libmlx.dylib
 
 CC					= gcc
-CFLAGS				= #-Wall -Wextra -Werror
+CFLAGS				= -Wall -Wextra -Werror
 
 OBJ_DIR				= object/
 SOURCE_DIR			= source/
@@ -41,7 +41,7 @@ sub_directory :
 $(OBJ_DIR)%.o : $(SOURCE_DIR)%.c
 	$(CC) -g -c -MMD -g $(CFLAGS) -I includes $< -o $@
 
-$(NAME) : $(MLX) $(LIBFT) $(OBJ) #$(SOURCE_DIR)neubivay.c 
+$(NAME) : $(MLX) $(LIBFT) $(OBJ)
 	@$(CC) $(CFLAGS) -lmlx -framework OpenGL -framework AppKit $^ -o $@
 	@cp $(MLX) .
 

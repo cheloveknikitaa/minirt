@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/05 10:45:06 by caugusta          #+#    #+#             */
-/*   Updated: 2021/08/10 17:43:47 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/10 18:51:57 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	main(int argc, char **argv)
 	int		j;
 	int		i;
 
-	if (argc != 2)
-		exit (0);
+	if (argc > 2)
+		exit_err(6);
 	check_name(argv[1]);
 	pars(argc, argv);
 	j = 0;

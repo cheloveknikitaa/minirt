@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 19:04:59 by caugusta          #+#    #+#             */
-/*   Updated: 2021/08/10 12:55:31 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/10 18:49:49 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	pars(int argc, char **argv)
 	int		n;
 	char	*line;
 
+	if (argc > 2)
+		exit_err(6);
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		exit_err(1);

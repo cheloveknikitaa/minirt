@@ -6,7 +6,7 @@
 /*   By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 14:43:22 by caugusta          #+#    #+#             */
-/*   Updated: 2021/07/05 11:03:30 by caugusta         ###   ########.fr       */
+/*   Updated: 2021/08/10 18:47:57 by caugusta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,14 @@ t_vec3	vec3_cross(t_vec3 a, t_vec3 b)
 
 t_vec3	pars_vec3(char **line)
 {
-	double	x;
-	double	y;
-	double	z;
+	t_vec3	vec;
 
-	x = ft_atof(line);
+	vec.x = ft_atof(line);
 	if (**line == ',')
 	{
 		*line = *line + 1;
 		if ((**line >= '0' && **line <= '9') || **line == '-' || **line == '+')
-			y = ft_atof(line);
+			vec.y = ft_atof(line);
 		else
 			exit_err(5);
 	}
@@ -41,27 +39,25 @@ t_vec3	pars_vec3(char **line)
 	{
 		*line = *line + 1;
 		if ((**line >= '0' && **line <= '9') || **line == '-' || **line == '+')
-			z = ft_atof(line);
+			vec.z = ft_atof(line);
 		else
 			exit_err(5);
 	}
 	else
 		exit_err(5);
-	return (new_vec3(x, y, z));
+	return (vec);
 }
 
 t_vec3	pars_vec3_color(char **line)
 {
-	double	x;
-	double	y;
-	double	z;
+	t_vec3	vec;
 
-	x = ft_atof(line);
+	vec.x = ft_atof(line);
 	if (**line == ',')
 	{
 		*line = *line + 1;
 		if ((**line >= '0' && **line <= '9') || **line == '-' || **line == '+')
-			y = ft_atof(line);
+			vec.y = ft_atof(line);
 		else
 			exit_err(2);
 	}
@@ -69,28 +65,26 @@ t_vec3	pars_vec3_color(char **line)
 	{
 		*line = *line + 1;
 		if ((**line >= '0' && **line <= '9') || **line == '-' || **line == '+')
-			z = ft_atof(line);
+			vec.z = ft_atof(line);
 		else
 			exit_err(2);
 	}
 	else
 		exit_err(2);
-	check_pars_vec3(x, y, z, 1);
-	return (new_vec3(x, y, z));
+	check_pars_vec3(vec.x, vec.y, vec.z, 1);
+	return (vec);
 }
 
 t_vec3	pars_vec3_norm(char **line)
 {
-	double	x;
-	double	y;
-	double	z;
+	t_vec3	vec;
 
-	x = ft_atof(line);
+	vec.x = ft_atof(line);
 	if (**line == ',')
 	{
 		*line = *line + 1;
 		if ((**line >= '0' && **line <= '9') || **line == '-' || **line == '+')
-			y = ft_atof(line);
+			vec.y = ft_atof(line);
 		else
 			exit_err(4);
 	}
@@ -98,14 +92,14 @@ t_vec3	pars_vec3_norm(char **line)
 	{
 		*line = *line + 1;
 		if ((**line >= '0' && **line <= '9') || **line == '-' || **line == '+')
-			z = ft_atof(line);
+			vec.z = ft_atof(line);
 		else
 			exit_err(4);
 	}
 	else
 		exit_err(4);
-	check_pars_vec3(x, y, z, 2);
-	return (new_vec3(x, y, z));
+	check_pars_vec3(vec.x, vec.y, vec.z, 2);
+	return (vec);
 }
 
 void	check_pars_vec3(double x, double y, double z, int i)
