@@ -1,76 +1,66 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: caugusta <caugusta@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/05/10 22:20:54 by caugusta          #+#    #+#              #
-#    Updated: 2021/08/10 20:41:56 by caugusta         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+include srcs.mk
 
-NAME				= miniRT
-LIBFT_NAME			= libft.a
-MLX_NAME			= libmlx.dylib
+NAME	:=	miniRT
 
-CC					= gcc
-CFLAGS				= -Wall -Wextra -Werror
+OBJ_DIR	:=	object/
+SRC_DIR	:=	source/
 
-OBJ_DIR				= object/
-SOURCE_DIR			= source/
-SOURCE				= sphere.c	utils_hook.c	utils_vec2.c	utils_vec3.c	utils_vec3_2.c	utils.c	utils_protect.c parser.c\
-						main.c	utils_color.c	utils_math.c	utils_vec2_1.c	utils_vec3_1.c	plane.c	cylinder.c	cone.c
+FT_LIB_DIR	:=	./libft/
+FT_LIB		:=	$(FT_LIB_DIR)libft.a
 
-LIBFT				= libft/$(LIBFT_NAME)
-LIBFT_DIR			= libft/
-MLX					= mlx/$(MLX_NAME)
-MLX_DIR				= mlx/
+MLX_DIR		:=	./.mlx/
+MLX			:=	$(MLX_DIR)libmlx.dylib
 
-OBJ					= $(addprefix $(OBJ_DIR), $(SOURCE:.c=.o))
-D_FILES				= $(wildcard $(OBJ_DIR)*.d)
+LDFLAGS		:=	-L$(FT_LIB_DIR)	-L$(MLX_DIR) -lft -lmlx 
 
-.PHONY : all sub_directory clean fclean re bonus
+CC		:=	gcc
+CFLAGS	:=	-Wall -Wextra -Werror -I$(FT_LIB_DIR) -I$(MLX_DIR) -I./includes
+RM		:=	rm -rf
 
-all : sub_directory $(NAME)
-	@echo COMPLETE
+SRCS	:=	$(addprefix $(SRC_DIR), $(SOURCE))
+OBJS	:=	$(addprefix $(OBJ_DIR), $(OBJECT))
 
-sub_directory :
-	@mkdir -p $(OBJ_DIR)
+.PHONY	:	all clean fclean re
 
-$(OBJ_DIR)%.o : $(SOURCE_DIR)%.c
-	$(CC) -g -c -MMD -g $(CFLAGS) -I includes $< -o $@
+all		:	$(NAME)
 
-$(NAME) : $(MLX) $(LIBFT) $(OBJ)
-	@$(CC) $(CFLAGS) -lmlx -framework OpenGL -framework AppKit $^ -o $@
-	@cp $(MLX) .
+$(NAME)	:	$(MLX) $(FT_LIB)
 
-$(LIBFT) :
-	@$(MAKE) -C $(LIBFT_DIR) --silent
-	@cp $(LIBFT_DIR)/libft.h ./includes
-	@echo LIBFT OK
-$(MLX) :
-	@$(MAKE) -C $(MLX_DIR) --silent
-	@cp $(MLX_DIR)/mlx.h ./includes
-	@echo MLX OK
+$(NAME)	:	$(OBJS)
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -o $@
 
-include $(D_FILES)
+$(OBJ_DIR)%.o : $(SRC_DIR)%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-bonus : all
+# bonus:	$(NAME_B)
 
-clean :
-	@$(MAKE) clean -C $(LIBFT_DIR) --silent
-	@echo CLEAN LIBFT
-	@$(MAKE) clean -C $(MLX_DIR) --silent
-	@echo CLEAN MLX
-	@rm -rf $(OBJ_DIR)
+# rules for libs  #
+# Make libs start #
+.PHONY		: libft mlx libs_clean libs_fclean
 
-fclean : clean
-	@$(MAKE) fclean -C $(LIBFT_DIR) --silent
-	@echo FCLEAN COMPLETE
-	@rm -f $(MLX_NAME) --silent
-	@rm -rf $(NAME)
-	@rm -rf includes/libft.h
-	@rm -rf includes/mlx.h
+libft		:
+	$(MAKE) -C $(FT_LIB_DIR)
 
-re : fclean all
+$(FT_LIB)	:	libft
+
+mlx			:
+	$(MAKE) -j1 -C $(MLX_DIR)
+
+$(MLX)		:	mlx
+
+libs_clean	:
+	$(MAKE) clean -C $(FT_LIB_DIR)
+	$(MAKE) clean -C $(MLX_DIR)
+
+libs_fclean	:
+	$(MAKE) fclean -C $(FT_LIB_DIR)
+
+# Make libs end #
+
+clean: libs_clean
+	@$(RM) $(OBJS)
+
+fclean:	clean libs_fclean
+	@$(RM) $(NAME)
+
+re:	fclean all
