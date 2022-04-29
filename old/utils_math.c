@@ -12,8 +12,6 @@
 
 #include "miniRT.h"
 
-double	ft_atof2(char **line, int i);
-
 double	max(double a, double b)
 {
 	if (a > b)
