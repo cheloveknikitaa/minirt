@@ -34,6 +34,21 @@ void	pars(int argc, char **argv)
 		exit_err(1);
 }
 
+
+typedef struct s_cam
+{
+	t_vec3	ro;
+	t_vec3	rd;
+	t_vec3	horizontal;
+	t_vec3	vertical;
+	t_vec3	w;
+	t_vec3	u;
+	t_vec3	v;
+	t_vec3	lower_left_corner;
+	int		FOV;
+	int		count;
+}				t_cam;
+
 void	init_cam(char **line, t_cam *cam, double aspect, t_vec3 vup)
 {
 	double	half_height;
